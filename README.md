@@ -273,3 +273,43 @@ Habitify は行動を継続するフェーズには適していますが、
 | インフラ    | Docker                    |
 | デプロイ先   | Render                    |
 git 
+
+## 画面遷移図
+https://www.figma.com/design/deiSvOny8qiHVpmsOXXWz7/%E7%84%A1%E9%A1%8C?node-id=0-1&t=1DeytiBDtRe7Z4Ez-1
+
+## ER図
+
+```mermaid
+erDiagram
+  users {
+    int id PK
+    string name
+    string email
+    string password_digest
+    datetime created_at
+    datetime updated_at
+  }
+
+  declarations {
+    int id PK
+    int user_id FK
+    text body
+    string status
+    date target_date
+    datetime created_at
+    datetime updated_at
+    datetime achieved_at
+  }
+
+  user_profiles {
+    int id PK
+    int user_id FK
+    text introduction
+    string avatar_image
+    datetime created_at
+    datetime updated_at
+  }
+
+  users ||--o{ declarations : "has many"
+  users ||--o| user_profiles : "has one"
+```
