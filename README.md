@@ -273,3 +273,6 @@ Habitify は行動を継続するフェーズには適していますが、
 | インフラ    | Docker                    |
 | デプロイ先   | Render                    |
 git 
+
+## 画面遷移図
+https://www.figma.com/design/deiSvOny8qiHVpmsOXXWz7/%E7%84%A1%E9%A1%8C?node-id=0-1&t=1DeytiBDtRe7Z4Ez-1
