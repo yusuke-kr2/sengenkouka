@@ -294,7 +294,7 @@ erDiagram
     int id PK
     int user_id FK
     text body
-    string status
+    integer status
     date target_date
     datetime created_at
     datetime updated_at
@@ -313,3 +313,31 @@ erDiagram
   users ||--o{ declarations : "has many"
   users ||--o| user_profiles : "has one"
 ```
+
+### テーブル詳細
+
+#### usersテーブル
+- id : int / 主キー
+- name : string / ユーザーの表示名
+- email : string / ログイン用メールアドレス
+- password_digest : string / ハッシュ化されたパスワード
+- created_at : datetime / レコード作成日時
+- updated_at : datetime / レコード更新日時
+
+#### declarationsテーブル
+- id : int / 主キー
+- user_id : int / 外部キー（usersテーブル参照）
+- body : text / 宣言内容
+- status : integer / 宣言のステータス（enum: 0=in_progress, 1=achieved, 2=failed、デフォルト: 0=in_progress）
+- target_date : date / 宣言の期限日
+- created_at : datetime / レコード作成日時
+- updated_at : datetime / レコード更新日時
+- achieved_at : datetime / 達成報告日時
+
+#### user_profilesテーブル
+- id : int / 主キー
+- user_id : int / 外部キー（usersテーブル参照）
+- introduction : text / 自己紹介文
+- avatar_image : string / アバター画像のファイルパス
+- created_at : datetime / レコード作成日時
+- updated_at : datetime / レコード更新日時
