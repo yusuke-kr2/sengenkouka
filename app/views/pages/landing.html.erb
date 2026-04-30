@@ -1,0 +1,101 @@
+<% content_for :title, "sengen - 宣言すると、動き出せる。" %>
+
+<!-- ナビバー -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/75 backdrop-blur-md border-b border-gray-200">
+  <div class="mx-auto pl-0 pr-6 h-16 flex justify-between items-center max-w-5xl">
+    <%= image_tag "logo.png", alt: "sengen", class: "h-10 w-auto -ml-12" %>
+    <div class="flex gap-2">
+      <%= link_to "ログイン", "#", class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors" %>
+      <%= link_to "新規登録", "#", class: "bg-blue-600 text-white rounded-lg px-4 py-1.5 text-sm hover:bg-blue-700 transition-colors" %>
+    </div>
+  </div>
+</nav>
+
+<!-- ヒーロー -->
+<section class="min-h-screen flex items-center justify-center text-center relative overflow-hidden pt-20">
+  <div class="absolute w-[400px] h-[400px] rounded-full bg-blue-500/10 blur-[80px] pointer-events-none top-1/4 -left-24"></div>
+  <div class="absolute w-[320px] h-[320px] rounded-full bg-blue-500/[0.08] blur-[80px] pointer-events-none bottom-1/4 -right-20"></div>
+  <div class="relative mx-auto px-6 max-w-6xl">
+    <h1 class="font-black leading-none mb-6 tracking-tight">
+      <%= image_tag "logo.png", alt: "sengen", class: "inline-block w-auto align-bottom", style: "height: clamp(2rem,6vw,6rem)" %><span class="text-[clamp(2rem,6vw,6rem)]">して</span><br>
+      <span class="text-[clamp(2rem,6vw,6rem)]">動き出す</span>
+    </h1>
+    <p class="text-gray-500 mb-10 text-xl font-light mx-auto max-w-xl leading-relaxed">
+      sengenは、宣言効果の力で<br>
+      あなたの目標達成を後押しします。
+    </p>
+    <%= link_to "無料で始める", "#", class: "inline-flex items-center bg-blue-600 text-white rounded-full px-8 py-3.5 text-lg font-semibold hover:bg-blue-700 transition-colors" %>
+  </div>
+</section>
+
+<!-- sengenとは -->
+<section class="py-24">
+  <div class="mx-auto px-6 max-w-3xl">
+    <h2 class="text-4xl font-bold mb-8">sengenとは?</h2>
+    <p class="text-2xl font-light leading-relaxed mb-6">
+      目標を<strong class="text-blue-600 font-semibold">宣言</strong>して共有することで、達成を後押しする。
+    </p>
+    <p class="text-gray-500 text-lg leading-relaxed">
+      目標を投稿し、他のユーザーから応援をもらいながら達成を目指します。達成したら報告し、履歴として記録。小さな目標から大きな目標まで、宣言することで「やらなきゃ」という気持ちを生み出し、あなたの行動を後押しします。
+    </p>
+  </div>
+</section>
+
+<!-- 宣言効果とは -->
+<section class="py-24 bg-gray-50">
+  <div class="mx-auto px-6 max-w-3xl">
+    <h2 class="text-4xl font-bold mb-8">宣言効果とは?</h2>
+    <p class="text-2xl font-light leading-relaxed mb-6">
+      目標を<strong class="text-blue-600 font-semibold">他者に公言</strong>することで、達成率が高まる心理現象。
+    </p>
+    <p class="text-gray-500 text-lg leading-relaxed">
+      宣言すると「言ったからにはやらなきゃ」という心理が働きます。これは脳が宣言と行動のズレを不快に感じるためです。また、周囲に見られている意識が怠け心を抑え、応援や励ましがモチベーション維持につながります。
+    </p>
+  </div>
+</section>
+
+<!-- 3ステップ -->
+<section class="py-24">
+  <div class="mx-auto px-6 max-w-2xl">
+    <div class="text-center mb-12">
+      <p class="text-blue-600 uppercase font-semibold tracking-widest text-xs mb-2">How it works</p>
+      <h2 class="text-4xl font-bold">3ステップで始める</h2>
+    </div>
+    <div class="flex flex-col gap-3">
+      <% [
+        { num: "01", title: "目標を宣言する", desc: "達成したい目標と期限を入力して投稿。具体的であるほど効果的です。" },
+        { num: "02", title: "応援を受け取る", desc: "他のユーザーからの応援が届きます。モチベーションを維持する力に。" },
+        { num: "03", title: "達成を報告する", desc: "目標達成したら報告。履歴として残り、次の目標への自信に。" },
+      ].each do |step| %>
+        <div class="flex items-start gap-6 p-4 rounded-2xl transition-colors hover:bg-gray-50">
+          <span class="text-6xl font-black text-blue-600/20 leading-none min-w-[80px]"><%= step[:num] %></span>
+          <div class="pt-2">
+            <h4 class="font-bold text-lg mb-1"><%= step[:title] %></h4>
+            <p class="text-gray-500"><%= step[:desc] %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 text-center">
+  <div class="mx-auto px-6 max-w-4xl">
+    <%= link_to "無料で始める", "#", class: "inline-flex items-center bg-blue-600 text-white rounded-full px-8 py-3.5 text-lg font-semibold hover:bg-blue-700 transition-colors" %>
+    <p class="text-xl mt-6 text-gray-500">登録は無料。宣言して、達成しよう。</p>
+  </div>
+</section>
+
+<!-- フッター -->
+<footer class="border-t border-gray-200 py-6">
+  <div class="mx-auto pl-0 pr-6 flex flex-col md:flex-row items-center justify-between gap-3 max-w-5xl">
+    <%= image_tag "logo.png", alt: "sengen", class: "h-10 w-auto -ml-12" %>
+    <div class="flex gap-6 text-gray-500 text-sm">
+      <span class="text-gray-500 cursor-not-allowed">利用規約</span>
+      <span class="text-gray-500 cursor-not-allowed">プライバシー</span>
+      <span class="text-gray-500 cursor-not-allowed">お問い合わせ</span>
+    </div>
+    <p class="text-gray-500 text-sm">&copy; 2026 sengen</p>
+  </div>
+</footer>
