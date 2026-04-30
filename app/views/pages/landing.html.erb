@@ -5,8 +5,12 @@
   <div class="mx-auto pl-0 pr-6 h-16 flex justify-between items-center max-w-5xl">
     <%= image_tag "logo.png", alt: "sengen", class: "h-10 w-auto -ml-12" %>
     <div class="flex gap-2">
-      <%= link_to "ログイン", "#", class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors" %>
-      <%= link_to "新規登録", "#", class: "bg-blue-600 text-white rounded-lg px-4 py-1.5 text-sm hover:bg-blue-700 transition-colors" %>
+      <% if user_signed_in? %>
+        <%= link_to "ログアウト", destroy_user_session_path, class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors" %>
+      <% else %>
+        <%= link_to "ログイン", new_user_session_path, class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors" %>
+        <%= link_to "新規登録", new_user_registration_path, class: "bg-blue-600 text-white rounded-lg px-4 py-1.5 text-sm hover:bg-blue-700 transition-colors" %>
+      <% end %>
     </div>
   </div>
 </nav>
@@ -24,7 +28,7 @@
       sengenは、宣言効果の力で<br>
       あなたの目標達成を後押しします。
     </p>
-    <%= link_to "無料で始める", "#", class: "inline-flex items-center bg-blue-600 text-white rounded-full px-8 py-3.5 text-lg font-semibold hover:bg-blue-700 transition-colors" %>
+    <%= link_to "無料で始める", new_user_registration_path, class: "inline-flex items-center bg-blue-600 text-white rounded-full px-8 py-3.5 text-lg font-semibold hover:bg-blue-700 transition-colors" %>
   </div>
 </section>
 
@@ -82,7 +86,7 @@
 <!-- CTA -->
 <section class="py-24 text-center">
   <div class="mx-auto px-6 max-w-4xl">
-    <%= link_to "無料で始める", "#", class: "inline-flex items-center bg-blue-600 text-white rounded-full px-8 py-3.5 text-lg font-semibold hover:bg-blue-700 transition-colors" %>
+    <%= link_to "無料で始める", new_user_registration_path, class: "inline-flex items-center bg-blue-600 text-white rounded-full px-8 py-3.5 text-lg font-semibold hover:bg-blue-700 transition-colors" %>
     <p class="text-xl mt-6 text-gray-500">登録は無料。宣言して、達成しよう。</p>
   </div>
 </section>
