@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show, :edit, :update]
 
-  resources :declarations, only: [:create] do
+  resources :declarations, only: [:index, :create] do
     member do
       patch :complete
     end
