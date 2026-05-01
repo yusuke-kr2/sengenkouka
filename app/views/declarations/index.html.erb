@@ -86,7 +86,7 @@
       </div>
     <% else %>
       <% @declarations.each do |declaration| %>
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 <%= declaration.completed? ? 'opacity-60' : '' %>">
+        <div class="rounded-2xl shadow-sm p-5 <%= declaration.completed? ? 'bg-blue-100 border border-blue-200' : 'bg-white border border-gray-200' %>">
           <div class="flex gap-3">
             <div class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
               <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,7 +95,7 @@
             </div>
             <div class="flex-1 min-w-0">
               <p class="font-bold text-gray-800 mb-2"><%= declaration.user.name %></p>
-              <div class="bg-gray-50 rounded-lg px-4 py-3 mb-3">
+              <div class="rounded-lg px-4 py-3 mb-3 <%= declaration.completed? ? 'bg-white' : 'bg-gray-50' %>">
                 <p class="text-gray-700 text-sm leading-relaxed"><%= declaration.content %></p>
               </div>
               <div class="flex items-center justify-between">
