@@ -13,7 +13,7 @@
   </div>
 </nav>
 
-<div class="min-h-screen bg-gray-50 pt-16">
+<div class="min-h-screen bg-gray-50 pt-16" data-controller="achieve">
 
   <div class="max-w-2xl mx-auto px-4 py-6 space-y-4">
 
@@ -108,10 +108,13 @@
                     達成！
                   </span>
                 <% elsif declaration.user == current_user %>
-                  <%= button_to "達成報告",
-                      complete_declaration_path(declaration),
-                      method: :patch,
-                      class: "bg-blue-600 text-white rounded-lg px-4 py-1.5 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer" %>
+                  <button
+                    data-action="click->achieve#open"
+                    data-content="<%= declaration.content %>"
+                    data-url="<%= complete_declaration_path(declaration) %>"
+                    class="bg-blue-600 text-white rounded-lg px-4 py-1.5 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer">
+                    達成報告
+                  </button>
                 <% end %>
               </div>
             </div>
@@ -121,4 +124,21 @@
     <% end %>
 
   </div>
+
+  <!-- 達成モーダル -->
+  <div data-achieve-target="modal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-8 text-center">
+      <p class="text-2xl font-bold mb-6">おめでとうございます！</p>
+      <p class="text-gray-400 text-sm mb-3">達成した宣言:</p>
+      <p data-achieve-target="content" class="text-gray-800 font-semibold text-lg bg-gray-50 rounded-xl px-4 py-4 mb-8 leading-relaxed"></p>
+      <form data-achieve-target="form" method="post" action="#">
+        <input type="hidden" name="_method" value="patch">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <button type="submit" class="bg-blue-600 text-white rounded-lg px-10 py-2.5 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer">
+          閉じる
+        </button>
+      </form>
+    </div>
+  </div>
+
 </div>
