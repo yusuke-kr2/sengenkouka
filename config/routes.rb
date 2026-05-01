@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   end
   root "pages#landing"
 
+  resource :profile, only: [:show, :edit, :update]
+
   resources :declarations, only: [:create] do
     member do
       patch :complete

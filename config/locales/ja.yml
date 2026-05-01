@@ -1,4 +1,8 @@
 ja:
+  profiles:
+    notices:
+      updated: "プロフィールを更新しました"
+
   declarations:
     notices:
       created: "宣言しました！"
