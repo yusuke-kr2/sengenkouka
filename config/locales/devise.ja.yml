@@ -13,7 +13,7 @@ ja:
     confirmations:
       send_instructions: "確認メールを送信しました"
       confirmed: "メールアドレスを確認しました"
-    failures:
+    failure:
       invalid: "メールアドレスまたはパスワードが正しくありません"
       not_found_in_database: "メールアドレスまたはパスワードが正しくありません"
       already_authenticated: "すでにログインしています"
