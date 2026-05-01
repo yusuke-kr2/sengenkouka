@@ -5,10 +5,19 @@ ja:
     edit:
       select_avatar: "プロフィール画像を選択"
 
+  registrations:
+    password_hint: "6文字以上で入力してください"
+
   declarations:
     notices:
       created: "宣言しました！"
       completed: "達成おめでとうございます！"
+
+  errors:
+    messages:
+      not_saved:
+        one: "%{resource}を保存できませんでした。%{count}件のエラーがあります。"
+        other: "%{resource}を保存できませんでした。%{count}件のエラーがあります。"
 
   activerecord:
     models:
@@ -23,8 +32,13 @@ ja:
         name: "ユーザー名"
         email: "メールアドレス"
         password: "パスワード"
-        password_confirmation: "パスワード（確認）"
+        password_confirmation: "パスワード"
     errors:
+      messages:
+        taken: "はすでに使用されています"
+        blank: "を入力してください"
+        too_short: "は%{count}文字以上で入力してください"
+        confirmation: "が一致しません"
       models:
         declaration:
           deadline_in_the_past: "今日以降の日付を選択してください。"
