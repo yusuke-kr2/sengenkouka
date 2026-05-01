@@ -7,7 +7,7 @@
       <%= image_tag "logo.png", alt: "sengen", class: "h-10 w-auto -ml-12" %>
     <% end %>
     <div class="flex items-center gap-3">
-      <span class="text-gray-600 text-sm font-medium"><%= current_user.name %></span>
+      <%= link_to current_user.name, profile_path, class: "text-gray-600 text-sm font-medium hover:text-gray-900 transition-colors" %>
       <%= link_to "ログアウト", destroy_user_session_path, class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors" %>
     </div>
   </div>
