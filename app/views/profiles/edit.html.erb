@@ -17,8 +17,27 @@
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
       <h2 class="text-lg font-bold text-gray-800 mb-6">プロフィール編集</h2>
 
-      <%= form_with model: current_user, url: profile_path, method: :patch do |f| %>
+      <%= form_with model: current_user, url: profile_path, method: :patch, multipart: true do |f| %>
         <div class="space-y-4">
+          <!-- アバター -->
+          <div data-controller="image-preview" class="flex items-center gap-4">
+            <div class="h-16 w-16 rounded-full bg-gray-100 flex items-center justify-center shrink-0 overflow-hidden">
+              <img data-image-preview-target="preview" src="" class="h-full w-full object-cover hidden">
+              <% if current_user.avatar.attached? %>
+                <%= image_tag current_user.avatar, class: "h-full w-full object-cover", data: { "image_preview_target": "placeholder" } %>
+              <% else %>
+                <svg data-image-preview-target="placeholder" class="h-9 w-9 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+              <% end %>
+            </div>
+            <div>
+              <%= f.label :avatar, t("profiles.edit.select_avatar"), class: "block text-sm font-medium text-blue-600 cursor-pointer hover:text-blue-700" %>
+              <%= f.file_field :avatar, accept: "image/*", class: "hidden",
+                  data: { "image_preview_target": "input", action: "change->image-preview#show" } %>
+            </div>
+          </div>
+
           <div>
             <%= f.label :name, "ユーザー名", class: "block text-sm font-medium text-gray-700 mb-1" %>
             <%= f.text_field :name,
