@@ -1,7 +1,7 @@
 class Declaration < ApplicationRecord
   belongs_to :user
 
-  enum :status, { pending: 0, completed: 1, declaring: 2}
+  enum :status, { pending: 0, completed: 1, declaring: 2 }
 
   validates :content, presence: true
   validates :deadline, presence: true
