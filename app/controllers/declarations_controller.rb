@@ -18,7 +18,7 @@ class DeclarationsController < ApplicationController
   end
 
   def complete
-    @declaration = current_user.declarations.pending.find(params[:id])
+    @declaration = current_user.declarations.declaring.find(params[:id])
     @declaration.completed!
     redirect_to root_path, notice: t("declarations.notices.completed")
   end

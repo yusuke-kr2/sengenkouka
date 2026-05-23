@@ -2,10 +2,12 @@ class ProfilesController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    @declarations = current_user.declarations.recent
-    @pending = @declarations.pending
-    @completed = @declarations.completed
-    @completion_rate = @declarations.any? ? (@completed.count * 100 / @declarations.count) : 0
+    @declarations = current_user.declarations.recent # ユーザーの全宣言を新しい順に取得
+    @declaring = @declarations.declaring # 宣言中のものを抽出
+    @pending = @declarations.pending # 未達成のものを抽出
+    @completed = @declarations.completed # 達成のものを抽出
+    judged = @pending.count + @completed.count # 未達成＋達成の合計件数（宣言中は省く）
+    @completion_rate = judged > 0 ? (@completed.count * 100 / judged) : 0 # 率計算
   end
 
   def edit
