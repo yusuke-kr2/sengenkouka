@@ -120,7 +120,17 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Check for system test files
+        id: check
+        run: |
+          if find test/system -name "*_test.rb" 2>/dev/null | grep -q .; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Run System Tests
+        if: steps.check.outputs.exists == 'true'
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
