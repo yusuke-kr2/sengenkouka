@@ -2,7 +2,7 @@ class DeclarationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @declarations = Declaration.includes(:user).recent
+    @declarations = Declaration.includes(user: { avatar_attachment: :blob }).recent
     @declaration = Declaration.new(deadline: Date.today)
   end
 
@@ -11,7 +11,7 @@ class DeclarationsController < ApplicationController
     if @declaration.save
       redirect_to root_path, notice: t("declarations.notices.created")
     else
-      @declarations = Declaration.includes(:user).recent
+      @declarations = Declaration.includes(user: { avatar_attachment: :blob }).recent
       flash.now[:alert] = @declaration.errors.full_messages.first
       render :index, status: :unprocessable_entity
     end
