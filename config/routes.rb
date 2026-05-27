@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   root "pages#landing"
 
   resource :profile, only: [ :show, :edit, :update ]
+  resources :users, only: [ :show ]
 
   resources :declarations, only: [ :index, :create ] do
     member do
