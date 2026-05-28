@@ -1,5 +1,5 @@
 <% content_for :title, "sengen - 宣言すると、動き出せる。" %>
-<% content_for :head do %><meta name="turbo-cache-control" content="no-cache"><% end %>
+
 
 <!-- ナビバー -->
 <nav class="fixed top-0 left-0 right-0 z-50 bg-white/75 backdrop-blur-md border-b border-gray-200">
@@ -9,7 +9,7 @@
     <% end %>
     <div class="flex gap-2">
       <% if user_signed_in? %>
-        <%= link_to "ログアウト", destroy_user_session_path, class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors" %>
+        <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors cursor-pointer" %>
       <% else %>
         <%= link_to "ログイン", new_user_session_path, class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors" %>
         <%= link_to "新規登録", new_user_registration_path, class: "bg-blue-600 text-white rounded-lg px-4 py-1.5 text-sm hover:bg-blue-700 transition-colors" %>
