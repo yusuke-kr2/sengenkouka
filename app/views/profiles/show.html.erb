@@ -1,5 +1,5 @@
 <% content_for :title, "プロフィール - sengen" %>
-<% content_for :head do %><meta name="turbo-cache-control" content="no-cache"><% end %>
+
 
 <!-- ナビバー -->
 <nav class="fixed top-0 left-0 right-0 z-50 bg-white/75 backdrop-blur-md border-b border-gray-200">
@@ -9,7 +9,7 @@
     <% end %>
     <div class="flex items-center gap-3">
       <%= link_to "ホーム", root_path, class: "text-gray-600 text-sm hover:text-gray-900 transition-colors" %>
-      <%= link_to "ログアウト", destroy_user_session_path, class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors", data: { turbo_prefetch: false } %>
+      <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors cursor-pointer" %>
     </div>
   </div>
 </nav>
