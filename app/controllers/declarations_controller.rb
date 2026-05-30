@@ -2,8 +2,9 @@ class DeclarationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @declarations = Declaration.includes(user: { avatar_attachment: :blob }).recent
+    @declarations = filter_by_period(Declaration.includes(user: { avatar_attachment: :blob }).recent)
     @declaration = Declaration.new(deadline: Date.today)
+    @current_period = params[:period] || "all"
   end
 
   def create
@@ -11,7 +12,8 @@ class DeclarationsController < ApplicationController
     if @declaration.save
       redirect_to root_path, notice: t("declarations.notices.created")
     else
-      @declarations = Declaration.includes(user: { avatar_attachment: :blob }).recent
+      @declarations = filter_by_period(Declaration.includes(user: { avatar_attachment: :blob }).recent)
+      @current_period = params[:period] || "all"
       flash.now[:alert] = @declaration.errors.full_messages.first
       render :index, status: :unprocessable_entity
     end
@@ -27,5 +29,20 @@ class DeclarationsController < ApplicationController
 
   def declaration_params
     params.require(:declaration).permit(:content, :deadline)
+  end
+
+  def filter_by_period(declarations)
+    case params[:period]
+    when "today"
+      declarations.where(deadline: Date.today)
+    when "this_week"
+      declarations.where(deadline: Date.today..Date.today.end_of_week)
+    when "this_month"
+      declarations.where(deadline: Date.today..Date.today.end_of_month)
+    when "later"
+      declarations.where("deadline > ?", Date.today.end_of_month)
+    else
+      declarations
+    end
   end
 end
