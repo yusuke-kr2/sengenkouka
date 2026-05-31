@@ -56,6 +56,10 @@
           <% else %>
             <p class="text-gray-300 text-sm mt-2">自己紹介を追加しましょう</p>
           <% end %>
+          <div class="flex gap-4 mt-2">
+            <p class="text-sm text-gray-500"><span class="font-bold text-gray-800"><%= current_user.followings.count %></span> フォロー</p>
+            <p class="text-sm text-gray-500"><span class="font-bold text-gray-800"><%= current_user.followers.count %></span> フォロワー</p>
+          </div>
         </div>
       </div>
     </div>

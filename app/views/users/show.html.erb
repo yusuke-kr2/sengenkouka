@@ -30,10 +30,25 @@
           <% end %>
         </div>
         <div class="flex-1 min-w-0">
-          <p class="font-bold text-gray-800 text-lg"><%= @user.name %></p>
+          <div class="flex items-center justify-between">
+            <p class="font-bold text-gray-800 text-lg"><%= @user.name %></p>
+            <% if @user != current_user %>
+              <% if current_user.following?(@user) %>
+                <%= button_to "フォロー中", relationship_path(current_user.active_relationships.find_by(following_id: @user.id)),
+                    method: :delete, class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors cursor-pointer" %>
+              <% else %>
+                <%= button_to "フォローする", relationships_path(following_id: @user.id),
+                    class: "bg-blue-600 text-white rounded-lg px-4 py-1.5 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer" %>
+              <% end %>
+            <% end %>
+          </div>
           <% if @user.bio.present? %>
             <p class="text-gray-500 text-sm mt-2 leading-relaxed"><%= @user.bio %></p>
           <% end %>
+          <div class="flex gap-4 mt-2">
+            <p class="text-sm text-gray-500"><span class="font-bold text-gray-800"><%= @user.followings.count %></span> フォロー</p>
+            <p class="text-sm text-gray-500"><span class="font-bold text-gray-800"><%= @user.followers.count %></span> フォロワー</p>
+          </div>
         </div>
       </div>
     </div>
