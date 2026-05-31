@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resource :profile, only: [ :show, :edit, :update ]
   resources :users, only: [ :show ]
 
+  resources :relationships, only: [ :create, :destroy ]
+
   resources :declarations, only: [ :index, :create ] do
     member do
       patch :complete
