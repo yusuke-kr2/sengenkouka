@@ -8,10 +8,22 @@ export default class extends Controller {
 
     this.tabTargets.forEach(tab => {
       const active = tab.dataset.tab === selected
-      tab.classList.toggle("border-blue-600", active)
-      tab.classList.toggle("text-blue-600", active)
-      tab.classList.toggle("border-transparent", !active)
-      tab.classList.toggle("text-gray-500", !active)
+      if (tab.dataset.tabStyle === "card") {
+        tab.classList.toggle("border-2", active)
+        tab.classList.toggle("border-blue-600", active)
+        tab.classList.toggle("border", !active)
+        tab.classList.toggle("border-gray-200", !active)
+        const label = tab.querySelector("[data-tab-label]")
+        if (label) {
+          label.classList.toggle("text-blue-600", active)
+          label.classList.toggle("text-gray-400", !active)
+        }
+      } else {
+        tab.classList.toggle("border-blue-600", active)
+        tab.classList.toggle("text-blue-600", active)
+        tab.classList.toggle("border-transparent", !active)
+        tab.classList.toggle("text-gray-500", !active)
+      }
     })
 
     this.panelTargets.forEach(panel => {
