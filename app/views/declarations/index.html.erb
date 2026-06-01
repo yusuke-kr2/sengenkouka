@@ -77,8 +77,19 @@
       </div>
     </div>
 
+    <!-- スコープフィルター -->
+    <div class="flex bg-white rounded-t-2xl overflow-hidden border-b border-gray-200">
+      <% [
+        ["すべて", "all"],
+        ["フォロー中", "following"]
+      ].each do |label, scope| %>
+        <%= link_to label, declarations_path(scope: scope, period: @current_period),
+            class: "flex-1 py-3 text-sm font-semibold text-center border-b-2 transition-colors #{@current_scope == scope ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'}" %>
+      <% end %>
+    </div>
+
     <!-- 期間フィルター -->
-    <div class="flex border-b border-gray-200 bg-white rounded-t-2xl overflow-hidden">
+    <div class="flex bg-white overflow-hidden border-b border-gray-200">
       <% [
         ["すべて", "all"],
         ["今日", "today"],
@@ -86,8 +97,8 @@
         ["今月中", "this_month"],
         ["来月以降", "later"]
       ].each do |label, period| %>
-        <%= link_to label, declarations_path(period: period),
-            class: "flex-1 py-3 text-sm font-semibold text-center border-b-2 transition-colors #{@current_period == period ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'}" %>
+        <%= link_to label, declarations_path(period: period, scope: @current_scope),
+            class: "flex-1 py-2.5 text-xs font-medium text-center transition-colors #{@current_period == period ? 'text-blue-600 bg-blue-50' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'}" %>
       <% end %>
     </div>
 
