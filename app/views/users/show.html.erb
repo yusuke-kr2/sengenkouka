@@ -46,8 +46,8 @@
             <p class="text-gray-500 text-sm mt-2 leading-relaxed"><%= @user.bio %></p>
           <% end %>
           <div class="flex gap-4 mt-2">
-            <p class="text-sm text-gray-500"><span class="font-bold text-gray-800"><%= @user.followings.count %></span> フォロー</p>
-            <p class="text-sm text-gray-500"><span class="font-bold text-gray-800"><%= @user.followers.count %></span> フォロワー</p>
+            <%= link_to followings_user_path(@user), class: "text-sm text-gray-500 hover:underline" do %><span class="font-bold text-gray-800"><%= @user.followings.count %></span> フォロー<% end %>
+            <%= link_to followers_user_path(@user), class: "text-sm text-gray-500 hover:underline" do %><span class="font-bold text-gray-800"><%= @user.followers.count %></span> フォロワー<% end %>
           </div>
         </div>
       </div>
