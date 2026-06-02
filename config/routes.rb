@@ -7,7 +7,12 @@ Rails.application.routes.draw do
   root "pages#landing"
 
   resource :profile, only: [ :show, :edit, :update ]
-  resources :users, only: [ :show ]
+  resources :users, only: [ :show ] do
+    member do
+      get :followings
+      get :followers
+    end
+  end
 
   resources :relationships, only: [ :create, :destroy ]
 
