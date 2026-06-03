@@ -2,7 +2,7 @@ class DeclarationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @declarations = filter_by_period(filter_by_scope(Declaration.includes(user: { avatar_attachment: :blob }).recent))
+    @declarations = filter_by_period(filter_by_scope(Declaration.includes(:witnesses, user: { avatar_attachment: :blob }).recent))
     @declaration = Declaration.new(deadline: Date.today)
     @current_period = params[:period] || "all"
     @current_scope = params[:scope] || "all"
@@ -13,7 +13,7 @@ class DeclarationsController < ApplicationController
     if @declaration.save
       redirect_to root_path, notice: t("declarations.notices.created")
     else
-      @declarations = filter_by_period(filter_by_scope(Declaration.includes(user: { avatar_attachment: :blob }).recent))
+      @declarations = filter_by_period(filter_by_scope(Declaration.includes(:witnesses, user: { avatar_attachment: :blob }).recent))
       @current_period = params[:period] || "all"
       @current_scope = params[:scope] || "all"
       flash.now[:alert] = @declaration.errors.full_messages.first
