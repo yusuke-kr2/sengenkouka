@@ -1,5 +1,6 @@
 class Declaration < ApplicationRecord
   belongs_to :user
+  has_many :witnesses, dependent: :destroy
 
   enum :status, { pending: 0, completed: 1, declaring: 2 }
 
