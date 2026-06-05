@@ -54,7 +54,7 @@
           <% if current_user.bio.present? %>
             <p class="text-gray-500 text-sm mt-2 leading-relaxed"><%= current_user.bio %></p>
           <% else %>
-            <p class="text-gray-300 text-sm mt-2">自己紹介を追加しましょう</p>
+            <p class="text-gray-300 text-sm mt-2">一言メッセージを追加しましょう</p>
           <% end %>
           <div class="flex gap-4 mt-2">
             <%= link_to followings_user_path(current_user), class: "text-sm text-gray-500 hover:underline" do %><span class="font-bold text-gray-800"><%= current_user.followings.count %></span> フォロー<% end %>
