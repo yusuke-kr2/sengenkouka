@@ -23,5 +23,6 @@ Rails.application.routes.draw do
     end
   end
 
+  get "how_to_use" => "pages#how_to_use", as: :how_to_use
   get "up" => "rails/health#show", as: :rails_health_check
 end

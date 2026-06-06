@@ -1,0 +1,80 @@
+<% content_for :title, "使い方 - sengen" %>
+
+<!-- ナビバー -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/75 backdrop-blur-md border-b border-gray-200">
+  <div class="mx-auto pl-0 pr-6 h-16 flex justify-between items-center max-w-5xl">
+    <%= link_to root_path do %>
+      <%= image_tag "logo.png", alt: "sengen", class: "h-10 w-auto -ml-12" %>
+    <% end %>
+    <div class="flex items-center gap-3">
+      <% if user_signed_in? %>
+        <%= link_to "ホーム", root_path, class: "text-gray-600 text-sm hover:text-gray-900 transition-colors" %>
+      <% else %>
+        <%= link_to "ログイン", new_user_session_path, class: "text-gray-600 text-sm hover:text-gray-900 transition-colors" %>
+      <% end %>
+    </div>
+  </div>
+</nav>
+
+<div class="min-h-screen bg-gray-50 pt-16">
+  <div class="max-w-2xl mx-auto px-4 py-6 space-y-6">
+
+    <!-- ヘッダー -->
+    <div class="text-center pt-4 pb-2">
+      <%= image_tag "logo.png", alt: "sengen", class: "h-12 w-auto mx-auto mb-1" %>
+      <p class="text-gray-500 text-sm tracking-wide">使い方ガイド</p>
+    </div>
+
+    <!-- 宣言の仕方 -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+      <h2 class="font-bold text-gray-800 text-lg mb-3">宣言する</h2>
+      <div class="space-y-2 text-sm text-gray-600 leading-relaxed">
+        <p>タイムラインの上部にある入力フォームから、今日やることを宣言できます。</p>
+        <p>目標の内容を入力し、期限を設定して「宣言する」ボタンを押してください。</p>
+        <p>宣言した内容はタイムラインに表示され、他のユーザーにも見えるようになります。</p>
+      </div>
+    </div>
+
+    <!-- 達成報告 -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+      <h2 class="font-bold text-gray-800 text-lg mb-3">達成報告する</h2>
+      <div class="space-y-2 text-sm text-gray-600 leading-relaxed">
+        <p>宣言した目標を達成したら、タイムラインの自分の宣言カードにある「達成報告」ボタンを押してください。</p>
+        <p>達成した宣言は青色のカードに変わります。</p>
+        <p>期限を過ぎても達成報告されなかった宣言は、自動的に未達成（赤色のカード）になります。</p>
+      </div>
+    </div>
+
+    <!-- フォロー機能 -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+      <h2 class="font-bold text-gray-800 text-lg mb-3">フォローする</h2>
+      <div class="space-y-2 text-sm text-gray-600 leading-relaxed">
+        <p>タイムラインでユーザー名をクリックすると、そのユーザーのプロフィールページに移動します。</p>
+        <p>プロフィールページの「フォローする」ボタンを押すと、そのユーザーをフォローできます。</p>
+        <p>タイムラインの「フォロー中」タブで、フォローしているユーザーの宣言だけを表示できます。</p>
+      </div>
+    </div>
+
+    <!-- 見届け機能 -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+      <h2 class="font-bold text-gray-800 text-lg mb-3">見届ける</h2>
+      <div class="space-y-2 text-sm text-gray-600 leading-relaxed">
+        <p>他のユーザーの宣言に対して「見届ける」ボタンを押すと、その宣言を見届けることができます。</p>
+        <p>見届けは応援の意思表示です。もう一度押すと解除できます。</p>
+        <p>自分の宣言を何人が見届けてくれているかは、プロフィールページで確認できます。</p>
+      </div>
+    </div>
+
+    <!-- プロフィール -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+      <h2 class="font-bold text-gray-800 text-lg mb-3">プロフィール</h2>
+      <div class="space-y-2 text-sm text-gray-600 leading-relaxed">
+        <p>ナビバーの自分の名前をクリックすると、プロフィールページに移動します。</p>
+        <p>プロフィールでは宣言の統計（宣言数・宣言中・未達成・達成・達成率）を確認できます。</p>
+        <p>各統計カードをクリックすると、該当する宣言の一覧が表示されます。</p>
+        <p>プロフィール画像や一言メッセージは「編集」ボタンから変更できます。</p>
+      </div>
+    </div>
+
+  </div>
+</div>
