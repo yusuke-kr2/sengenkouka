@@ -101,7 +101,7 @@
       <%= image_tag "logo.png", alt: "sengen", class: "h-10 w-auto -ml-12" %>
     <% end %>
     <div class="flex gap-6 text-gray-500 text-sm">
-      <span class="text-gray-500 cursor-not-allowed">利用規約</span>
+      <%= link_to "利用規約", terms_of_service_path, class: "hover:text-gray-900 transition-colors" %>
       <%= link_to "プライバシー", privacy_policy_path, class: "hover:text-gray-900 transition-colors" %>
       <span class="text-gray-500 cursor-not-allowed">お問い合わせ</span>
     </div>
