@@ -1,0 +1,97 @@
+<% content_for :title, "利用規約 - sengen" %>
+
+<!-- ナビバー -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/75 backdrop-blur-md border-b border-gray-200">
+  <div class="mx-auto pl-0 pr-6 h-16 flex justify-between items-center max-w-5xl">
+    <%= link_to root_path do %>
+      <%= image_tag "logo.png", alt: "sengen", class: "h-10 w-auto -ml-12" %>
+    <% end %>
+    <div class="flex items-center gap-3">
+      <% if user_signed_in? %>
+        <%= link_to "ホーム", root_path, class: "text-gray-600 text-sm hover:text-gray-900 transition-colors" %>
+      <% else %>
+        <%= link_to "ログイン", new_user_session_path, class: "text-gray-600 text-sm hover:text-gray-900 transition-colors" %>
+      <% end %>
+    </div>
+  </div>
+</nav>
+
+<div class="min-h-screen bg-gray-50 pt-16">
+  <div class="max-w-2xl mx-auto px-4 py-6 space-y-6">
+
+    <!-- ヘッダー -->
+    <div class="text-center pt-4 pb-2">
+      <h1 class="text-xl font-bold text-gray-800">利用規約</h1>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 space-y-6">
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">第1条（適用）</h2>
+        <p class="text-sm text-gray-600 leading-relaxed">本規約は、sengen（以下「本サービス」）の利用に関する条件を定めるものです。ユーザーは本規約に同意の上、本サービスを利用するものとします。</p>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">第2条（アカウント登録）</h2>
+        <div class="text-sm text-gray-600 leading-relaxed space-y-1">
+          <p>1. ユーザーは正確な情報を提供してアカウントを登録するものとします。</p>
+          <p>2. アカウントの管理責任はユーザー自身にあり、第三者への譲渡・貸与はできません。</p>
+          <p>3. パスワードの管理はユーザーの責任とし、不正利用による損害について本サービスは責任を負いません。</p>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">第3条（禁止事項）</h2>
+        <div class="text-sm text-gray-600 leading-relaxed space-y-1">
+          <p>ユーザーは以下の行為を行ってはなりません。</p>
+          <ul class="list-disc list-inside space-y-1 ml-2">
+            <li>法令または公序良俗に反する行為</li>
+            <li>他のユーザーへの誹謗中傷、嫌がらせ、脅迫</li>
+            <li>虚偽の情報を登録・投稿する行為</li>
+            <li>本サービスの運営を妨害する行為</li>
+            <li>他のユーザーの個人情報を無断で収集・公開する行為</li>
+            <li>不正アクセスやシステムへの攻撃</li>
+            <li>その他、運営が不適切と判断する行為</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">第4条（投稿内容）</h2>
+        <div class="text-sm text-gray-600 leading-relaxed space-y-1">
+          <p>1. ユーザーが投稿した宣言等のコンテンツに関する責任はユーザー自身にあります。</p>
+          <p>2. 運営は、禁止事項に該当する投稿を予告なく削除できるものとします。</p>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">第5条（サービスの変更・停止）</h2>
+        <p class="text-sm text-gray-600 leading-relaxed">運営は、ユーザーへの事前の通知なく、本サービスの内容の変更、追加、または停止を行うことができるものとします。</p>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">第6条（アカウントの停止・削除）</h2>
+        <p class="text-sm text-gray-600 leading-relaxed">運営は、ユーザーが本規約に違反した場合、事前の通知なくアカウントの停止または削除を行うことができるものとします。</p>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">第7条（免責事項）</h2>
+        <div class="text-sm text-gray-600 leading-relaxed space-y-1">
+          <p>1. 本サービスは現状有姿で提供され、特定の目的への適合性を保証するものではありません。</p>
+          <p>2. 本サービスの利用により生じた損害について、運営は一切の責任を負いません。</p>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">第8条（規約の変更）</h2>
+        <p class="text-sm text-gray-600 leading-relaxed">運営は、必要に応じて本規約を変更できるものとします。変更後の利用規約は、本ページに掲載した時点で効力を生じるものとします。</p>
+      </div>
+
+      <div class="pt-2 border-t border-gray-100">
+        <p class="text-xs text-gray-400">制定日: 2026年6月7日</p>
+      </div>
+
+    </div>
+
+  </div>
+</div>
