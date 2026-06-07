@@ -1,0 +1,100 @@
+<% content_for :title, "プライバシーポリシー - sengen" %>
+
+<!-- ナビバー -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/75 backdrop-blur-md border-b border-gray-200">
+  <div class="mx-auto pl-0 pr-6 h-16 flex justify-between items-center max-w-5xl">
+    <%= link_to root_path do %>
+      <%= image_tag "logo.png", alt: "sengen", class: "h-10 w-auto -ml-12" %>
+    <% end %>
+    <div class="flex items-center gap-3">
+      <% if user_signed_in? %>
+        <%= link_to "ホーム", root_path, class: "text-gray-600 text-sm hover:text-gray-900 transition-colors" %>
+      <% else %>
+        <%= link_to "ログイン", new_user_session_path, class: "text-gray-600 text-sm hover:text-gray-900 transition-colors" %>
+      <% end %>
+    </div>
+  </div>
+</nav>
+
+<div class="min-h-screen bg-gray-50 pt-16">
+  <div class="max-w-2xl mx-auto px-4 py-6 space-y-6">
+
+    <!-- ヘッダー -->
+    <div class="text-center pt-4 pb-2">
+      <h1 class="text-xl font-bold text-gray-800">プライバシーポリシー</h1>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 space-y-6">
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">1. はじめに</h2>
+        <p class="text-sm text-gray-600 leading-relaxed">sengen（以下「本サービス」）は、ユーザーの個人情報の保護を重要と考え、以下のとおりプライバシーポリシーを定めます。</p>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">2. 収集する情報</h2>
+        <div class="text-sm text-gray-600 leading-relaxed space-y-1">
+          <p>本サービスでは、以下の情報を収集します。</p>
+          <ul class="list-disc list-inside space-y-1 ml-2">
+            <li>ユーザー名</li>
+            <li>メールアドレス</li>
+            <li>パスワード（暗号化して保存）</li>
+            <li>プロフィール画像</li>
+            <li>一言メッセージ</li>
+            <li>宣言内容および期限</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">3. 情報の利用目的</h2>
+        <div class="text-sm text-gray-600 leading-relaxed space-y-1">
+          <p>収集した情報は、以下の目的で利用します。</p>
+          <ul class="list-disc list-inside space-y-1 ml-2">
+            <li>本サービスの提供・運営</li>
+            <li>ユーザー認証およびアカウント管理</li>
+            <li>タイムラインやプロフィールでの情報表示</li>
+            <li>サービスの改善・新機能の開発</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">4. 情報の第三者提供</h2>
+        <p class="text-sm text-gray-600 leading-relaxed">本サービスは、法令に基づく場合を除き、ユーザーの同意なく個人情報を第三者に提供することはありません。</p>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">5. 情報の管理</h2>
+        <p class="text-sm text-gray-600 leading-relaxed">本サービスは、収集した個人情報の漏洩・滅失・毀損の防止に努め、適切な安全管理措置を講じます。パスワードは暗号化して保存し、平文では保持しません。</p>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">6. ユーザーの権利</h2>
+        <div class="text-sm text-gray-600 leading-relaxed space-y-1">
+          <p>ユーザーは以下の権利を有します。</p>
+          <ul class="list-disc list-inside space-y-1 ml-2">
+            <li>自身の個人情報の開示・訂正・削除を求めること</li>
+            <li>アカウントの削除を求めること</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">7. Cookieの使用</h2>
+        <p class="text-sm text-gray-600 leading-relaxed">本サービスは、ユーザーの認証状態を維持するためにCookieを使用します。ブラウザの設定によりCookieを無効にすることができますが、その場合本サービスの一部機能が利用できなくなる場合があります。</p>
+      </div>
+
+      <div>
+        <h2 class="font-bold text-gray-800 mb-2">8. プライバシーポリシーの変更</h2>
+        <p class="text-sm text-gray-600 leading-relaxed">本ポリシーの内容は、必要に応じて変更することがあります。変更後のプライバシーポリシーは、本ページに掲載した時点で効力を生じるものとします。</p>
+      </div>
+
+      <div class="pt-2 border-t border-gray-100">
+        <p class="text-xs text-gray-400">制定日: 2026年6月7日</p>
+      </div>
+
+    </div>
+
+  </div>
+</div>

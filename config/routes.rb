@@ -24,5 +24,6 @@ Rails.application.routes.draw do
   end
 
   get "how_to_use" => "pages#how_to_use", as: :how_to_use
+  get "privacy_policy" => "pages#privacy_policy", as: :privacy_policy
   get "up" => "rails/health#show", as: :rails_health_check
 end
