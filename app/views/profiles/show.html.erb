@@ -60,6 +60,7 @@
           <div class="flex gap-4 mt-2">
             <%= link_to followings_user_path(current_user), class: "text-sm text-gray-500 hover:underline" do %><span class="font-bold text-gray-800"><%= current_user.followings.count %></span> フォロー<% end %>
             <%= link_to followers_user_path(current_user), class: "text-sm text-gray-500 hover:underline" do %><span class="font-bold text-gray-800"><%= current_user.followers.count %></span> フォロワー<% end %>
+            <%= link_to witnesses_path, class: "text-sm text-gray-500 hover:underline" do %><span class="font-bold text-gray-800"><%= current_user.witnesses.count %></span> 見届け中<% end %>
           </div>
         </div>
       </div>

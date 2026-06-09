@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   end
 
   resources :relationships, only: [ :create, :destroy ]
-  resources :witnesses, only: [ :create, :destroy ]
+  resources :witnesses, only: [ :create, :destroy, :index ]
 
   resources :declarations, only: [ :index, :create ] do
     member do
