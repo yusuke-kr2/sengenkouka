@@ -180,16 +180,35 @@
   <!-- 達成モーダル -->
   <div data-achieve-target="modal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-8 text-center">
-      <p class="text-2xl font-bold mb-6">おめでとうございます！</p>
-      <p class="text-gray-400 text-sm mb-3">達成した宣言:</p>
-      <p data-achieve-target="content" class="text-gray-800 font-semibold text-lg bg-gray-50 rounded-xl px-4 py-4 mb-8 leading-relaxed"></p>
-      <form data-achieve-target="form" method="post" action="#">
-        <input type="hidden" name="_method" value="patch">
-        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-        <button type="submit" class="bg-blue-600 text-white rounded-lg px-10 py-2.5 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer">
+      <!-- 確認画面 -->
+      <div data-achieve-target="confirm">
+        <p class="text-2xl font-bold mb-6">達成報告</p>
+        <p class="text-gray-400 text-sm mb-3">宣言を達成しましたか？</p>
+        <p data-achieve-target="content" class="text-gray-800 font-semibold text-lg bg-gray-50 rounded-xl px-4 py-4 mb-8 leading-relaxed"></p>
+        <div class="flex gap-3 justify-center">
+          <button type="button" data-action="click->achieve#close"
+            class="border border-gray-300 text-gray-600 rounded-lg px-8 py-2.5 text-sm font-semibold hover:bg-gray-50 transition-colors cursor-pointer">
+            していない
+          </button>
+          <form data-achieve-target="form" method="post" action="#">
+            <input type="hidden" name="_method" value="patch">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <button type="button" data-action="click->achieve#submit"
+              class="bg-blue-600 text-white rounded-lg px-8 py-2.5 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer">
+              達成した
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- おめでとう画面 -->
+      <div data-achieve-target="congrats" class="hidden">
+        <p class="text-2xl font-bold mb-6">おめでとうございます！</p>
+        <p class="text-gray-400 text-sm mb-8">宣言を達成しました</p>
+        <button type="button" data-action="click->achieve#close"
+          class="bg-blue-600 text-white rounded-lg px-10 py-2.5 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer">
           閉じる
         </button>
-      </form>
+      </div>
     </div>
   </div>
 
