@@ -113,7 +113,15 @@
       </div>
     <% else %>
       <% @declarations.each do |declaration| %>
-        <div class="rounded-2xl shadow-sm p-5 <%= if declaration.completed? then 'bg-blue-100 border border-blue-200' elsif declaration.pending? then 'bg-red-100 border border-red-200' else 'bg-white border border-gray-200' end %>">
+        <div class="relative rounded-2xl shadow-sm p-5 <%= if declaration.completed? then 'bg-blue-100 border border-blue-200' elsif declaration.pending? then 'bg-red-100 border border-red-200' else 'bg-white border border-gray-200' end %>">
+          <% if declaration.completed? %>
+            <span class="absolute top-3 right-3 flex items-center gap-1.5 text-green-600 text-xs font-semibold bg-green-50 px-3 py-1 rounded-full">
+              <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              達成！
+            </span>
+          <% end %>
           <div class="flex gap-3">
             <div class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0 overflow-hidden">
               <% if declaration.user.avatar.attached? %>
@@ -140,14 +148,7 @@
                       <%= button_to "見届ける", witnesses_path(declaration_id: declaration.id), class: "text-gray-500 text-sm bg-gray-50 px-4 py-1.5 rounded-full cursor-pointer hover:bg-gray-100 transition-colors" %>
                     <% end %>
                   <% end %>
-                  <% if declaration.completed? %>
-                    <span class="flex items-center gap-1.5 text-green-600 text-sm font-semibold bg-green-50 px-4 py-1.5 rounded-full">
-                      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                      </svg>
-                      達成！
-                    </span>
-                  <% elsif declaration.user == current_user %>
+                  <% if declaration.declaring? && declaration.user == current_user %>
                     <button
                       data-action="click->achieve#open"
                       data-content="<%= declaration.content %>"
