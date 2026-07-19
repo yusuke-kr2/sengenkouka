@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get "search" => "searches#index", as: :search
+
   get "how_to_use" => "pages#how_to_use", as: :how_to_use
   get "privacy_policy" => "pages#privacy_policy", as: :privacy_policy
   get "terms_of_service" => "pages#terms_of_service", as: :terms_of_service
