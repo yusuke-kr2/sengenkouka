@@ -33,8 +33,10 @@ class DeclarationTest < ActiveSupport::TestCase
   end
 
   test "recentスコープは新しい順に並ぶ" do
+    old = Declaration.create!(content: "古い宣言", deadline: Date.today, user: users(:alice))
+    new_one = Declaration.create!(content: "新しい宣言", deadline: Date.today, user: users(:alice))
     declarations = Declaration.recent
-    assert_equal declarations, declarations.sort_by(&:created_at).reverse
+    assert declarations.index(new_one) < declarations.index(old)
   end
 
   test "宣言削除でwitnessも削除される" do
