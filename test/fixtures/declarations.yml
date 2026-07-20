@@ -1,0 +1,17 @@
+declaring_one:
+  content: 今日中にRailsのテストを書く
+  deadline: <%= Date.today + 1 %>
+  status: 2
+  user: alice
+
+completed_one:
+  content: READMEを更新する
+  deadline: <%= Date.today %>
+  status: 1
+  user: alice
+
+pending_one:
+  content: 期限切れのタスク
+  deadline: <%= Date.today - 1 %>
+  status: 0
+  user: bob
