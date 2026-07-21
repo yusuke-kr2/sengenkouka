@@ -24,6 +24,7 @@ class DeclarationsController < ApplicationController
   def complete
     @declaration = current_user.declarations.declaring.find(params[:id])
     @declaration.completed!
+    current_user.increment_streak!
     redirect_to root_path, notice: t("declarations.notices.completed")
   end
 

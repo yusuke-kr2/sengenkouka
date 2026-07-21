@@ -66,6 +66,15 @@
       </div>
     </div>
 
+    <!-- ストリーク -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 flex items-center gap-3">
+      <span class="text-3xl">🔥</span>
+      <div>
+        <p class="text-2xl font-bold text-gray-800"><%= current_user.streak_count %></p>
+        <p class="text-xs text-gray-400">連続達成ストリーク</p>
+      </div>
+    </div>
+
     <!-- 統計 -->
     <div data-controller="tabs" class="grid grid-cols-5 gap-3">
       <button data-tabs-target="tab" data-tab="all" data-tab-style="card" data-action="click->tabs#switch"
