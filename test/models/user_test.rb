@@ -62,10 +62,12 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "期限切れの宣言があるとストリークがリセットされる" do
-    bob = users(:bob)
-    bob.update!(streak_count: 5)
-    bob.reset_streak_if_expired!
-    assert_equal 0, bob.reload.streak_count
+    alice = users(:alice)
+    alice.update!(streak_count: 5)
+    Declaration.create!(content: "期限切れテスト", deadline: Date.today, status: :declaring, user: alice)
+      .update_column(:deadline, Date.yesterday)
+    alice.reset_streak_if_expired!
+    assert_equal 0, alice.reload.streak_count
   end
 
   test "期限切れがなければストリークはリセットされない" do
