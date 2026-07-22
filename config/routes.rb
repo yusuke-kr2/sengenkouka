@@ -23,6 +23,12 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :admin do
+    root "dashboard#index"
+    resources :users, only: [ :index, :destroy ]
+    resources :declarations, only: [ :index, :destroy ]
+  end
+
   get "search" => "searches#index", as: :search
 
   get "how_to_use" => "pages#how_to_use", as: :how_to_use
