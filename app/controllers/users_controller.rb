@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     @completed = @declarations.completed
     judged = @pending.count + @completed.count
     @completion_rate = judged > 0 ? (@completed.count * 100 / judged) : 0
+    @heatmap_data = build_heatmap_data(@user)
   end
 
   def followings

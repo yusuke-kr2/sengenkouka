@@ -75,6 +75,12 @@
       </div>
     </div>
 
+    <!-- カレンダーヒートマップ -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5">
+      <p class="font-bold text-gray-800 mb-3">宣言カレンダー</p>
+      <div data-controller="heatmap" data-heatmap-data-value="<%= @heatmap_data.to_json %>"></div>
+    </div>
+
     <!-- 統計 -->
     <div data-controller="tabs" class="grid grid-cols-5 gap-3">
       <button data-tabs-target="tab" data-tab="all" data-tab-style="card" data-action="click->tabs#switch"

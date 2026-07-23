@@ -8,6 +8,7 @@ class ProfilesController < ApplicationController
     @completed = @declarations.completed # 達成のものを抽出
     judged = @pending.count + @completed.count # 未達成＋達成の合計件数（宣言中は省く）
     @completion_rate = judged > 0 ? (@completed.count * 100 / judged) : 0 # 率計算
+    @heatmap_data = build_heatmap_data(current_user)
   end
 
   def edit
