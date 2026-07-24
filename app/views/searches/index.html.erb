@@ -24,15 +24,22 @@
     </div>
 
     <!-- 検索フォーム -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4">
-      <%= form_with url: search_path, method: :get, local: true, class: "flex gap-2" do %>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4" data-controller="loading">
+      <%= form_with url: search_path, method: :get, local: true, class: "flex gap-2", data: { action: "submit->loading#submit" } do %>
         <input type="text" name="q" value="<%= @query %>" placeholder="ユーザー名を入力..."
           class="flex-1 border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           autofocus>
-        <button type="submit" class="bg-blue-600 text-white rounded-lg px-5 py-2 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer">
+        <button type="submit" data-loading-target="button" class="bg-blue-600 text-white rounded-lg px-5 py-2 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer">
           検索
         </button>
       <% end %>
+      <!-- ローディングスピナー -->
+      <div data-loading-target="spinner" class="hidden flex justify-center py-4">
+        <svg class="animate-spin h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+      </div>
     </div>
 
     <!-- 検索結果 -->
