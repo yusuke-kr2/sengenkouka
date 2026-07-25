@@ -24,11 +24,17 @@
     </div>
 
     <!-- 検索フォーム -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4" data-controller="loading">
-      <%= form_with url: search_path, method: :get, local: true, class: "flex gap-2", data: { action: "submit->loading#submit" } do %>
-        <input type="text" name="q" value="<%= @query %>" placeholder="ユーザー名を入力..."
-          class="flex-1 border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          autofocus>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4" data-controller="loading autocomplete" data-autocomplete-url-value="<%= search_suggestions_path %>">
+      <%= form_with url: search_path, method: :get, local: true, class: "flex gap-2 relative", data: { action: "submit->loading#submit" } do %>
+        <div class="flex-1 relative">
+          <input type="text" name="q" value="<%= @query %>" placeholder="ユーザー名を入力..."
+            class="w-full border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            data-autocomplete-target="input"
+            data-action="input->autocomplete#onInput"
+            autocomplete="off"
+            autofocus>
+          <ul data-autocomplete-target="results" class="hidden absolute z-10 left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden"></ul>
+        </div>
         <button type="submit" data-loading-target="button" class="bg-blue-600 text-white rounded-lg px-5 py-2 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer">
           検索
         </button>

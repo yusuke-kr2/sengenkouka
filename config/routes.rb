@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   end
 
   get "search" => "searches#index", as: :search
+  get "search/suggestions" => "searches#suggestions", as: :search_suggestions
 
   get "how_to_use" => "pages#how_to_use", as: :how_to_use
   get "privacy_policy" => "pages#privacy_policy", as: :privacy_policy
