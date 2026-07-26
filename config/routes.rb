@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     resources :declarations, only: [ :index, :destroy ]
   end
 
+  resources :notifications, only: [ :index ]
   get "search" => "searches#index", as: :search
   get "search/suggestions" => "searches#suggestions", as: :search_suggestions
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_22_133457) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_26_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -52,6 +52,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_133457) do
     t.index ["user_id"], name: "index_declarations_on_user_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "actor_id", null: false
+    t.datetime "created_at", null: false
+    t.bigint "declaration_id", null: false
+    t.boolean "read", default: false, null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["actor_id"], name: "index_notifications_on_actor_id"
+    t.index ["declaration_id"], name: "index_notifications_on_declaration_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "relationships", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "follower_id", null: false
@@ -70,9 +82,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_133457) do
     t.string "encrypted_password", default: "", null: false
     t.string "name"
     t.datetime "remember_created_at"
-    t.integer "streak_count", default: 0, null: false
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
+    t.integer "streak_count", default: 0, null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -91,6 +103,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_133457) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "declarations", "users"
+  add_foreign_key "notifications", "declarations"
+  add_foreign_key "notifications", "users"
+  add_foreign_key "notifications", "users", column: "actor_id"
   add_foreign_key "relationships", "users", column: "follower_id"
   add_foreign_key "relationships", "users", column: "following_id"
   add_foreign_key "witnesses", "declarations"
