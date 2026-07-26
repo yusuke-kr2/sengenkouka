@@ -11,6 +11,7 @@ class DeclarationsController < ApplicationController
   def create
     @declaration = current_user.declarations.build(declaration_params)
     if @declaration.save
+      create_notifications_for_followers(@declaration)
       redirect_to root_path, notice: t("declarations.notices.created")
     else
       @declarations = filter_by_period(filter_by_scope(Declaration.includes(:witnesses, user: { avatar_attachment: :blob }).recent))
@@ -29,6 +30,12 @@ class DeclarationsController < ApplicationController
   end
 
   private
+
+  def create_notifications_for_followers(declaration)
+    current_user.followers.find_each do |follower|
+      Notification.create!(user: follower, actor: current_user, declaration: declaration)
+    end
+  end
 
   def declaration_params
     params.require(:declaration).permit(:content, :deadline)
