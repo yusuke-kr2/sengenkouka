@@ -69,13 +69,23 @@
                 rows: 3,
                 class: "w-full border border-gray-200 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
             <div class="flex items-center gap-2 mt-3">
+              <%= f.select :category,
+                  Declaration::CATEGORY_LABELS.map { |k, v| [v, k] },
+                  {},
+                  class: "border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" %>
               <%= f.date_select :deadline,
                   { start_year: Date.today.year, end_year: Date.today.year + 5,
                     order: [:year, :month, :day],
                     selected: @declaration.deadline,
                     use_month_numbers: true },
                   { class: "border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
-              <div class="flex-1"></div>
+            </div>
+            <div class="mt-2">
+              <%= f.text_field :tag_names,
+                  placeholder: "タグ（カンマ区切り: 英語, TOEIC）",
+                  class: "w-full border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+            </div>
+            <div class="flex justify-end mt-3">
               <%= f.submit "宣言する",
                   class: "bg-blue-600 text-white rounded-lg px-5 py-1.5 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer" %>
             </div>
@@ -90,8 +100,16 @@
         ["すべて", "all"],
         ["フォロー中", "following"]
       ].each do |label, scope| %>
-        <%= link_to label, declarations_path(scope: scope, period: @current_period),
+        <%= link_to label, declarations_path(scope: scope, period: @current_period, category: @current_category, tag: @current_tag),
             class: "flex-1 py-3 text-sm font-semibold text-center border-b-2 transition-colors #{@current_scope == scope ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'}" %>
+      <% end %>
+    </div>
+
+    <!-- カテゴリフィルター -->
+    <div class="flex flex-wrap bg-white overflow-hidden border-b border-gray-200">
+      <% ([["すべて", "all"]] + Declaration::CATEGORY_LABELS.map { |k, v| [v, k] }).each do |label, cat| %>
+        <%= link_to label, declarations_path(category: cat, scope: @current_scope, period: @current_period, tag: @current_tag),
+            class: "flex-1 py-2.5 text-xs font-medium text-center transition-colors #{@current_category == cat ? 'text-blue-600 bg-blue-50' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'}" %>
       <% end %>
     </div>
 
@@ -104,10 +122,19 @@
         ["今月中", "this_month"],
         ["来月以降", "later"]
       ].each do |label, period| %>
-        <%= link_to label, declarations_path(period: period, scope: @current_scope),
+        <%= link_to label, declarations_path(period: period, scope: @current_scope, category: @current_category, tag: @current_tag),
             class: "flex-1 py-2.5 text-xs font-medium text-center transition-colors #{@current_period == period ? 'text-blue-600 bg-blue-50' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'}" %>
       <% end %>
     </div>
+
+    <!-- タグフィルター解除 -->
+    <% if @current_tag.present? %>
+      <div class="flex items-center gap-2 text-sm text-gray-500">
+        <span>タグ: <span class="font-semibold text-gray-700"><%= @current_tag %></span></span>
+        <%= link_to "解除", declarations_path(scope: @current_scope, period: @current_period, category: @current_category),
+            class: "text-red-500 hover:text-red-700 text-xs" %>
+      </div>
+    <% end %>
 
     <!-- 宣言カード一覧 -->
     <% if @declarations.empty? %>
@@ -139,10 +166,21 @@
               <% end %>
             </div>
             <div class="flex-1 min-w-0">
-              <p class="font-bold text-gray-800 mb-2"><%= link_to declaration.user.name, user_path(declaration.user), class: "hover:underline" %></p>
+              <div class="flex items-center gap-2 mb-2">
+                <p class="font-bold text-gray-800"><%= link_to declaration.user.name, user_path(declaration.user), class: "hover:underline" %></p>
+                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full"><%= declaration.category_label %></span>
+              </div>
               <div class="rounded-lg px-4 py-3 mb-3 <%= if declaration.completed? || declaration.pending? then 'bg-white' else 'bg-gray-50' end %>">
                 <p class="text-gray-700 text-sm leading-relaxed"><%= declaration.content %></p>
               </div>
+              <% if declaration.tags.any? %>
+                <div class="flex flex-wrap gap-1.5 mb-2">
+                  <% declaration.tags.each do |tag| %>
+                    <%= link_to "##{tag.name}", declarations_path(tag: tag.name, scope: @current_scope, period: @current_period, category: @current_category),
+                        class: "text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full hover:bg-blue-100 transition-colors" %>
+                  <% end %>
+                </div>
+              <% end %>
               <div class="flex items-center justify-between">
                 <span class="text-gray-400 text-sm"><%= declaration.deadline.strftime("%Y/%m/%d") %></span>
                 <div class="flex items-center gap-2">
