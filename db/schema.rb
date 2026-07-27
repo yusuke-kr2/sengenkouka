@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_26_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_27_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,7 +42,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_26_000000) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "declaration_tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "declaration_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["declaration_id", "tag_id"], name: "index_declaration_tags_on_declaration_id_and_tag_id", unique: true
+    t.index ["declaration_id"], name: "index_declaration_tags_on_declaration_id"
+    t.index ["tag_id"], name: "index_declaration_tags_on_tag_id"
+  end
+
   create_table "declarations", force: :cascade do |t|
+    t.integer "category", default: 5, null: false
     t.text "content", null: false
     t.datetime "created_at", null: false
     t.date "deadline", null: false
@@ -74,6 +85,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_26_000000) do
     t.index ["following_id"], name: "index_relationships_on_following_id"
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.boolean "admin", default: false, null: false
     t.text "bio"
@@ -102,6 +120,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_26_000000) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "declaration_tags", "declarations"
+  add_foreign_key "declaration_tags", "tags"
   add_foreign_key "declarations", "users"
   add_foreign_key "notifications", "declarations"
   add_foreign_key "notifications", "users"
