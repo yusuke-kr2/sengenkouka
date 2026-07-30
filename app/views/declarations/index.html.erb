@@ -184,6 +184,16 @@
               <div class="flex items-center justify-between">
                 <span class="text-gray-400 text-sm"><%= declaration.deadline.strftime("%Y/%m/%d") %></span>
                 <div class="flex items-center gap-2">
+                  <% if declaration.user == current_user %>
+                    <% share_text = declaration.completed? ? "「#{declaration.content}」を達成しました！" : "「#{declaration.content}」を宣言しました！" %>
+                    <a href="https://x.com/intent/tweet?text=<%= ERB::Util.url_encode("#{share_text}\n#sengen #宣言効果") %>"
+                       target="_blank" rel="noopener noreferrer"
+                       class="text-gray-400 hover:text-gray-600 transition-colors">
+                      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                    </a>
+                  <% end %>
                   <% if declaration.user != current_user %>
                     <% witness = declaration.witnesses.find_by(user: current_user) %>
                     <% if witness %>
