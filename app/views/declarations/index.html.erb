@@ -64,10 +64,15 @@
         <div class="flex-1">
           <p class="text-gray-400 text-sm mb-2">今日やることを宣言しよう...</p>
           <%= form_with model: @declaration, url: declarations_path do |f| %>
-            <%= f.text_area :content,
-                placeholder: "目標を入力してください",
-                rows: 3,
-                class: "w-full border border-gray-200 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+            <div data-controller="char-count" data-char-count-max-value="200">
+              <%= f.text_area :content,
+                  placeholder: "目標を入力してください",
+                  maxlength: 200,
+                  rows: 3,
+                  data: { char_count_target: "input", action: "input->char-count#update" },
+                  class: "w-full border border-gray-200 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+              <p class="text-right text-xs mt-1"><span data-char-count-target="count" class="text-gray-400">200</span></p>
+            </div>
             <div class="flex items-center gap-2 mt-3">
               <%= f.select :category,
                   Declaration::CATEGORY_LABELS.map { |k, v| [v, k] },
