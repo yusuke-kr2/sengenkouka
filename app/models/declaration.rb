@@ -33,7 +33,7 @@ class Declaration < ApplicationRecord
     end
   end
 
-  validates :content, presence: true
+  validates :content, presence: true, length: { maximum: 200 }
   validates :deadline, presence: true
   validate :deadline_cannot_be_in_the_past
 
