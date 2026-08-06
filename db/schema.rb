@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_27_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_06_122552) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -57,6 +57,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_27_000001) do
     t.text "content", null: false
     t.datetime "created_at", null: false
     t.date "deadline", null: false
+    t.datetime "reminded_at"
     t.integer "status", default: 2, null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
@@ -67,6 +68,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_27_000001) do
     t.bigint "actor_id", null: false
     t.datetime "created_at", null: false
     t.bigint "declaration_id", null: false
+    t.string "notification_type", default: "follow", null: false
     t.boolean "read", default: false, null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false

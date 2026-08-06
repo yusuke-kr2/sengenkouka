@@ -16,3 +16,6 @@ production:
   expire_declarations:
     class: ExpireDeclarationsJob
     schedule: at 0am every day
+  remind_declarations:
+    class: RemindDeclarationsJob
+    schedule: at 9am every day
