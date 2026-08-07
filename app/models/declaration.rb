@@ -20,6 +20,10 @@ class Declaration < ApplicationRecord
     CATEGORY_LABELS[category] || "その他"
   end
 
+  def expired?
+    declaring? && deadline < Date.today
+  end
+
   attr_accessor :tag_names
 
   after_save :save_tags

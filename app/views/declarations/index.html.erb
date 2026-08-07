@@ -1,242 +1,209 @@
 <% content_for :title, "タイムライン - sengen" %>
 
+<div data-controller="achieve">
 
-<%= render "shared/navbar" %>
-
-<div class="min-h-screen bg-gray-50 pt-16" data-controller="achieve">
-
-  <div class="max-w-2xl mx-auto px-4 py-6 space-y-4">
-
-    <!-- ページタイトル -->
-    <div class="text-center pt-4 pb-2">
-      <%= image_tag "logo.png", alt: "sengen", class: "h-12 w-auto mx-auto mb-1" %>
-      <p class="text-gray-500 text-sm tracking-wide">タイムライン</p>
+  <!-- フラッシュメッセージ -->
+  <% if notice %>
+    <div class="mx-4 mt-4 bg-blue-50 border border-blue-200 text-blue-700 rounded-xl px-4 py-3 text-sm flex items-center justify-between">
+      <span><%= notice %></span>
+      <button onclick="this.parentElement.remove()" class="ml-3 text-blue-400 hover:text-blue-600">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
     </div>
+  <% end %>
+  <% if alert %>
+    <div class="mx-4 mt-4 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm flex items-center justify-between">
+      <span><%= alert %></span>
+      <button onclick="this.parentElement.remove()" class="ml-3 text-red-400 hover:text-red-600">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+  <% end %>
 
-    <!-- フラッシュメッセージ -->
-    <% if notice %>
-      <div class="bg-blue-50 border border-blue-200 text-blue-700 rounded-xl px-4 py-3 text-sm flex items-center justify-between">
-        <span><%= notice %></span>
-        <button onclick="this.parentElement.remove()" class="ml-3 text-blue-400 hover:text-blue-600 transition-colors">
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
+  <!-- スコープタブ -->
+  <div class="flex border-b border-gray-200 sticky top-0 bg-white/90 backdrop-blur-md z-10">
+    <% [["すべて", "all"], ["フォロー中", "following"]].each do |label, scope| %>
+      <%= link_to label, declarations_path(scope: scope, period: @current_period, category: @current_category, tag: @current_tag),
+          class: "flex-1 py-3 text-sm font-bold text-center border-b-2 transition-colors #{@current_scope == scope ? 'border-blue-600 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'}" %>
     <% end %>
-    <% if alert %>
-      <div class="bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm flex items-center justify-between">
-        <span><%= alert %></span>
-        <button onclick="this.parentElement.remove()" class="ml-3 text-red-400 hover:text-red-600 transition-colors">
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
-    <% end %>
+  </div>
 
-    <!-- 宣言フォーム -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5">
-      <div class="flex gap-3">
-        <div class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
+  <!-- 宣言フォーム -->
+  <div class="px-4 py-4 border-b border-gray-200">
+    <div class="flex gap-3">
+      <div class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0 overflow-hidden">
+        <% if current_user.avatar.attached? %>
+          <%= image_tag current_user.avatar, class: "h-full w-full object-cover" %>
+        <% else %>
           <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
           </svg>
-        </div>
-        <div class="flex-1">
-          <p class="text-gray-400 text-sm mb-2">今日やることを宣言しよう...</p>
-          <%= form_with model: @declaration, url: declarations_path do |f| %>
-            <div data-controller="char-count" data-char-count-max-value="200">
-              <%= f.text_area :content,
-                  placeholder: "目標を入力してください",
-                  maxlength: 200,
-                  rows: 3,
-                  data: { char_count_target: "input", action: "input->char-count#update" },
-                  class: "w-full border border-gray-200 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
-              <p class="text-right text-xs mt-1"><span data-char-count-target="count" class="text-gray-400">200</span></p>
-            </div>
-            <div class="flex items-center gap-2 mt-3">
-              <%= f.select :category,
-                  Declaration::CATEGORY_LABELS.map { |k, v| [v, k] },
-                  {},
-                  class: "border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" %>
-              <%= f.date_select :deadline,
-                  { start_year: Date.today.year, end_year: Date.today.year + 5,
-                    order: [:year, :month, :day],
-                    selected: @declaration.deadline,
-                    use_month_numbers: true },
-                  { class: "border border-gray-200 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
-            </div>
-            <div class="mt-2">
-              <%= f.text_field :tag_names,
-                  placeholder: "タグ（カンマ区切り: 英語, TOEIC）",
-                  class: "w-full border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
-            </div>
-            <div class="flex justify-end mt-3">
-              <%= f.submit "宣言する",
-                  class: "bg-blue-600 text-white rounded-lg px-5 py-1.5 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer" %>
-            </div>
-          <% end %>
-        </div>
+        <% end %>
+      </div>
+      <div class="flex-1">
+        <%= form_with model: @declaration, url: declarations_path do |f| %>
+          <div data-controller="char-count" data-char-count-max-value="200">
+            <%= f.text_area :content,
+                placeholder: "今日やることを宣言しよう...",
+                maxlength: 200,
+                rows: 3,
+                data: { char_count_target: "input", action: "input->char-count#update" },
+                class: "w-full text-gray-800 placeholder-gray-400 text-sm resize-none focus:outline-none border-0 p-0 leading-relaxed" %>
+            <p class="text-right text-xs mt-1 text-gray-300"><span data-char-count-target="count">200</span></p>
+          </div>
+          <div class="flex items-center gap-2 mt-2 flex-wrap">
+            <%= f.select :category,
+                Declaration::CATEGORY_LABELS.map { |k, v| [v, k] },
+                {},
+                class: "border border-gray-200 rounded-full px-3 py-1 text-xs text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+            <%= f.date_select :deadline,
+                { start_year: Date.today.year, end_year: Date.today.year + 5,
+                  order: [:year, :month, :day],
+                  selected: @declaration.deadline,
+                  use_month_numbers: true },
+                { class: "border border-gray-200 rounded-full px-3 py-1 text-xs text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
+            <%= f.text_field :tag_names,
+                placeholder: "タグ（カンマ区切り）",
+                class: "border border-gray-200 rounded-full px-3 py-1 text-xs text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent flex-1 min-w-0" %>
+          </div>
+          <div class="flex justify-end mt-3">
+            <%= f.submit "宣言する",
+                class: "bg-blue-600 text-white rounded-full px-5 py-1.5 text-sm font-bold hover:bg-blue-700 transition-colors cursor-pointer" %>
+          </div>
+        <% end %>
       </div>
     </div>
+  </div>
 
-    <!-- スコープフィルター -->
-    <div class="flex bg-white rounded-t-2xl overflow-hidden border-b border-gray-200">
-      <% [
-        ["すべて", "all"],
-        ["フォロー中", "following"]
-      ].each do |label, scope| %>
-        <%= link_to label, declarations_path(scope: scope, period: @current_period, category: @current_category, tag: @current_tag),
-            class: "flex-1 py-3 text-sm font-semibold text-center border-b-2 transition-colors #{@current_scope == scope ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'}" %>
-      <% end %>
+  <!-- フィルター -->
+  <div class="border-b border-gray-200">
+    <!-- カテゴリ・期間 -->
+    <div class="flex items-center gap-2 px-4 py-2 border-t border-gray-100">
+      <select onchange="window.location=this.value" class="text-xs text-gray-600 border border-gray-200 rounded-full px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+        <% ([["カテゴリ：すべて", "all"]] + Declaration::CATEGORY_LABELS.map { |k, v| ["#{v}", k] }).each do |label, cat| %>
+          <option value="<%= declarations_path(category: cat, scope: @current_scope, period: @current_period, tag: @current_tag) %>" <%= 'selected' if @current_category == cat %>><%= label %></option>
+        <% end %>
+      </select>
+      <select onchange="window.location=this.value" class="text-xs text-gray-600 border border-gray-200 rounded-full px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+        <% [["期間：すべて", "all"], ["今日", "today"], ["今週中", "this_week"], ["今月中", "this_month"], ["来月以降", "later"]].each do |label, period| %>
+          <option value="<%= declarations_path(period: period, scope: @current_scope, category: @current_category, tag: @current_tag) %>" <%= 'selected' if @current_period == period %>><%= label %></option>
+        <% end %>
+      </select>
     </div>
+  </div>
 
-    <!-- カテゴリフィルター -->
-    <div class="flex flex-wrap bg-white overflow-hidden border-b border-gray-200">
-      <% ([["すべて", "all"]] + Declaration::CATEGORY_LABELS.map { |k, v| [v, k] }).each do |label, cat| %>
-        <%= link_to label, declarations_path(category: cat, scope: @current_scope, period: @current_period, tag: @current_tag),
-            class: "flex-1 py-2.5 text-xs font-medium text-center transition-colors #{@current_category == cat ? 'text-blue-600 bg-blue-50' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'}" %>
-      <% end %>
+  <!-- タグフィルター解除 -->
+  <% if @current_tag.present? %>
+    <div class="flex items-center gap-2 px-4 py-2 border-b border-gray-200 text-sm text-gray-500">
+      <span>タグ: <span class="font-semibold text-gray-700">#<%= @current_tag %></span></span>
+      <%= link_to "解除", declarations_path(scope: @current_scope, period: @current_period, category: @current_category),
+          class: "text-red-500 hover:text-red-700 text-xs ml-2" %>
     </div>
+  <% end %>
 
-    <!-- 期間フィルター -->
-    <div class="flex bg-white overflow-hidden border-b border-gray-200">
-      <% [
-        ["すべて", "all"],
-        ["今日", "today"],
-        ["今週中", "this_week"],
-        ["今月中", "this_month"],
-        ["来月以降", "later"]
-      ].each do |label, period| %>
-        <%= link_to label, declarations_path(period: period, scope: @current_scope, category: @current_category, tag: @current_tag),
-            class: "flex-1 py-2.5 text-xs font-medium text-center transition-colors #{@current_period == period ? 'text-blue-600 bg-blue-50' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'}" %>
-      <% end %>
+  <!-- 宣言一覧 -->
+  <% if @declarations.empty? %>
+    <div class="text-center py-16 text-gray-400">
+      <svg class="h-12 w-12 mx-auto mb-3 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+      </svg>
+      <p class="text-sm">まだ宣言がありません</p>
     </div>
-
-    <!-- タグフィルター解除 -->
-    <% if @current_tag.present? %>
-      <div class="flex items-center gap-2 text-sm text-gray-500">
-        <span>タグ: <span class="font-semibold text-gray-700"><%= @current_tag %></span></span>
-        <%= link_to "解除", declarations_path(scope: @current_scope, period: @current_period, category: @current_category),
-            class: "text-red-500 hover:text-red-700 text-xs" %>
-      </div>
-    <% end %>
-
-    <!-- 宣言カード一覧 -->
-    <% if @declarations.empty? %>
-      <div class="text-center py-16 text-gray-400">
-        <svg class="h-12 w-12 mx-auto mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-        </svg>
-        <p class="text-sm">まだ宣言がありません。最初の宣言をしましょう！</p>
-      </div>
-    <% else %>
-      <% @declarations.each do |declaration| %>
-        <div class="relative rounded-2xl shadow-sm p-5 <%= if declaration.completed? then 'bg-blue-100 border border-blue-200' elsif declaration.pending? then 'bg-red-100 border border-red-200' else 'bg-white border border-gray-200' end %>">
-          <% if declaration.completed? %>
-            <span class="absolute top-3 right-3 flex items-center gap-1.5 text-green-600 text-xs font-semibold bg-green-50 px-3 py-1 rounded-full">
-              <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+  <% else %>
+    <% @declarations.each do |declaration| %>
+      <div class="px-4 py-4 border-b border-gray-200 <%= (declaration.pending? || declaration.expired?) ? 'bg-red-50' : declaration.completed? ? 'bg-blue-50' : '' %> hover:bg-gray-50 transition-colors">
+        <div class="flex gap-3">
+          <div class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0 overflow-hidden">
+            <% if declaration.user.avatar.attached? %>
+              <%= image_tag declaration.user.avatar, class: "h-full w-full object-cover" %>
+            <% else %>
+              <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
               </svg>
-              達成！
-            </span>
-          <% end %>
-          <div class="flex gap-3">
-            <div class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0 overflow-hidden">
-              <% if declaration.user.avatar.attached? %>
-                <%= image_tag declaration.user.avatar, class: "h-full w-full object-cover" %>
-              <% else %>
-                <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                </svg>
+            <% end %>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="font-bold text-gray-900 text-sm"><%= link_to declaration.user.name, user_path(declaration.user), class: "hover:underline" %></span>
+              <span class="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full"><%= declaration.category_label %></span>
+              <% if declaration.completed? %>
+                <span class="text-xs text-green-600 font-bold ml-auto">✓ 達成</span>
               <% end %>
             </div>
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 mb-2">
-                <p class="font-bold text-gray-800"><%= link_to declaration.user.name, user_path(declaration.user), class: "hover:underline" %></p>
-                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full"><%= declaration.category_label %></span>
+            <p class="text-gray-800 text-sm leading-relaxed mb-2"><%= declaration.content %></p>
+            <% if declaration.tags.any? %>
+              <div class="flex flex-wrap gap-2 mb-2">
+                <% declaration.tags.each do |tag| %>
+                  <%= link_to "##{tag.name}", declarations_path(tag: tag.name, scope: @current_scope, period: @current_period, category: @current_category),
+                      class: "text-xs text-blue-500 hover:text-blue-700 transition-colors" %>
+                <% end %>
               </div>
-              <div class="rounded-lg px-4 py-3 mb-3 <%= if declaration.completed? || declaration.pending? then 'bg-white' else 'bg-gray-50' end %>">
-                <p class="text-gray-700 text-sm leading-relaxed"><%= declaration.content %></p>
-              </div>
-              <% if declaration.tags.any? %>
-                <div class="flex flex-wrap gap-1.5 mb-2">
-                  <% declaration.tags.each do |tag| %>
-                    <%= link_to "##{tag.name}", declarations_path(tag: tag.name, scope: @current_scope, period: @current_period, category: @current_category),
-                        class: "text-xs text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full hover:bg-blue-100 transition-colors" %>
+            <% end %>
+            <div class="flex items-center justify-between mt-1">
+              <span class="text-xs text-gray-400"><%= declaration.deadline.strftime("%Y/%m/%d") %></span>
+              <div class="flex items-center gap-3">
+                <% if declaration.user == current_user %>
+                  <% share_text = declaration.completed? ? "「#{declaration.content}」を達成しました！" : "「#{declaration.content}」を宣言しました！" %>
+                  <a href="https://x.com/intent/tweet?text=<%= ERB::Util.url_encode("#{share_text}\n#sengen #宣言効果") %>"
+                     target="_blank" rel="noopener noreferrer"
+                     class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                  </a>
+                <% end %>
+                <% if declaration.user != current_user %>
+                  <% witness = declaration.witnesses.find_by(user: current_user) %>
+                  <% if witness %>
+                    <%= button_to "見届け中", witness_path(witness), method: :delete, class: "text-blue-600 text-xs font-bold bg-blue-50 px-3 py-1 rounded-full cursor-pointer hover:bg-blue-100 transition-colors" %>
+                  <% else %>
+                    <%= button_to "見届ける", witnesses_path(declaration_id: declaration.id), class: "text-gray-500 text-xs bg-gray-100 px-3 py-1 rounded-full cursor-pointer hover:bg-gray-200 transition-colors" %>
                   <% end %>
-                </div>
-              <% end %>
-              <div class="flex items-center justify-between">
-                <span class="text-gray-400 text-sm"><%= declaration.deadline.strftime("%Y/%m/%d") %></span>
-                <div class="flex items-center gap-2">
-                  <% if declaration.user == current_user %>
-                    <% share_text = declaration.completed? ? "「#{declaration.content}」を達成しました！" : "「#{declaration.content}」を宣言しました！" %>
-                    <a href="https://x.com/intent/tweet?text=<%= ERB::Util.url_encode("#{share_text}\n#sengen #宣言効果") %>"
-                       target="_blank" rel="noopener noreferrer"
-                       class="text-gray-400 hover:text-gray-600 transition-colors">
-                      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                      </svg>
-                    </a>
-                  <% end %>
-                  <% if declaration.user != current_user %>
-                    <% witness = declaration.witnesses.find_by(user: current_user) %>
-                    <% if witness %>
-                      <%= button_to "見届け中", witness_path(witness), method: :delete, class: "text-blue-600 text-sm font-semibold bg-blue-50 px-4 py-1.5 rounded-full cursor-pointer hover:bg-blue-100 transition-colors" %>
-                    <% else %>
-                      <%= button_to "見届ける", witnesses_path(declaration_id: declaration.id), class: "text-gray-500 text-sm bg-gray-50 px-4 py-1.5 rounded-full cursor-pointer hover:bg-gray-100 transition-colors" %>
-                    <% end %>
-                  <% end %>
-                  <% if declaration.declaring? && declaration.user == current_user %>
-                    <button
-                      data-action="click->achieve#open"
-                      data-content="<%= declaration.content %>"
-                      data-url="<%= complete_declaration_path(declaration) %>"
-                      class="bg-blue-600 text-white rounded-lg px-4 py-1.5 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer">
-                      達成報告
-                    </button>
-                  <% end %>
-                </div>
+                <% end %>
+                <% if declaration.declaring? && declaration.user == current_user %>
+                  <button
+                    data-action="click->achieve#open"
+                    data-content="<%= declaration.content %>"
+                    data-url="<%= complete_declaration_path(declaration) %>"
+                    class="bg-blue-600 text-white rounded-full px-4 py-1 text-xs font-bold hover:bg-blue-700 transition-colors cursor-pointer">
+                    達成報告
+                  </button>
+                <% end %>
               </div>
             </div>
           </div>
         </div>
-      <% end %>
+      </div>
     <% end %>
-
-  </div>
+  <% end %>
 
   <!-- 達成モーダル -->
   <div data-achieve-target="modal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-8 text-center">
-      <!-- 確認画面 -->
       <div data-achieve-target="confirm">
         <p class="text-2xl font-bold mb-6">達成報告</p>
         <p class="text-gray-400 text-sm mb-3">宣言を達成しましたか？</p>
         <p data-achieve-target="content" class="text-gray-800 font-semibold text-lg bg-gray-50 rounded-xl px-4 py-4 mb-8 leading-relaxed"></p>
         <div class="flex gap-3 justify-center">
           <button type="button" data-action="click->achieve#close"
-            class="border border-gray-300 text-gray-600 rounded-lg px-8 py-2.5 text-sm font-semibold hover:bg-gray-50 transition-colors cursor-pointer">
+            class="border border-gray-300 text-gray-600 rounded-full px-8 py-2.5 text-sm font-bold hover:bg-gray-50 transition-colors cursor-pointer">
             していない
           </button>
           <form data-achieve-target="form" method="post" action="#">
             <input type="hidden" name="_method" value="patch">
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
             <button type="button" data-action="click->achieve#submit"
-              class="bg-blue-600 text-white rounded-lg px-8 py-2.5 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer">
+              class="bg-blue-600 text-white rounded-full px-8 py-2.5 text-sm font-bold hover:bg-blue-700 transition-colors cursor-pointer">
               達成した
             </button>
           </form>
         </div>
       </div>
-      <!-- おめでとう画面 -->
       <div data-achieve-target="congrats" class="hidden">
         <p class="text-2xl font-bold mb-6">おめでとうございます！</p>
         <p class="text-gray-400 text-sm mb-8">宣言を達成しました</p>
         <button type="button" data-action="click->achieve#close"
-          class="bg-blue-600 text-white rounded-lg px-10 py-2.5 text-sm font-semibold hover:bg-blue-700 transition-colors cursor-pointer">
+          class="bg-blue-600 text-white rounded-full px-10 py-2.5 text-sm font-bold hover:bg-blue-700 transition-colors cursor-pointer">
           閉じる
         </button>
       </div>

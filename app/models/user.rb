@@ -29,14 +29,6 @@ class User < ApplicationRecord
     end
 
     def increment_streak!
-      reset_streak_if_expired!
       increment!(:streak_count)
-    end
-
-    def reset_streak_if_expired!
-      if declarations.declaring.where("deadline < ?", Date.today).exists?
-        declarations.declaring.where("deadline < ?", Date.today).update_all(status: :pending)
-        update!(streak_count: 0)
-      end
     end
 end
