@@ -6,6 +6,7 @@ import LoadingController from "./loading_controller"
 import AutocompleteController from "./autocomplete_controller"
 import CharCountController from "./char_count_controller"
 import DropdownController from "./dropdown_controller"
+import HeatmapController from "./heatmap_controller"
 
 application.register("achieve", AchieveController)
 application.register("tabs", TabsController)
@@ -14,4 +15,5 @@ application.register("loading", LoadingController)
 application.register("autocomplete", AutocompleteController)
 application.register("char-count", CharCountController)
 application.register("dropdown", DropdownController)
+application.register("heatmap", HeatmapController)
 

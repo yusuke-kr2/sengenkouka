@@ -5,6 +5,13 @@ export default class extends Controller {
 
   connect() {
     this.render()
+    this.tooltip = document.createElement("div")
+    this.tooltip.className = "fixed z-50 bg-gray-800 text-white text-xs rounded px-2 py-1 pointer-events-none hidden whitespace-nowrap"
+    document.body.appendChild(this.tooltip)
+  }
+
+  disconnect() {
+    this.tooltip?.remove()
   }
 
   render() {
@@ -39,8 +46,9 @@ export default class extends Controller {
 
     // 月ラベル行
     html += '<div class="flex gap-0.5 mb-1 ml-0">'
-    monthLabels.forEach(label => {
-      html += `<span class="text-xs text-gray-400" style="width:${label.span * 13}px">${label.name}</span>`
+    monthLabels.forEach((label, i) => {
+      const isLast = i === monthLabels.length - 1
+      html += `<span class="text-xs text-gray-400 whitespace-nowrap" style="width:${label.span * 13}px;overflow:visible">${label.name}</span>`
     })
     html += '</div>'
 
@@ -50,26 +58,37 @@ export default class extends Controller {
       html += '<div class="flex flex-col gap-0.5">'
       week.forEach(day => {
         const colorClass = this.getColor(day.status, day.inRange)
-        const tooltip = day.inRange ? `${day.date}${day.status ? ` (${this.statusLabel(day.status)})` : ''}` : ''
-        html += `<div class="w-3 h-3 rounded-sm ${colorClass}" title="${tooltip}"></div>`
+        const label = day.inRange ? `${day.date}${day.status ? ` · ${this.statusLabel(day.status)}` : ''}` : ''
+        html += `<div class="w-3 h-3 rounded-sm ${colorClass} cursor-default" data-label="${label}"></div>`
       })
       html += '</div>'
     })
     html += '</div>'
 
     // 凡例
-    html += '<div class="flex items-center gap-3 mt-2">'
-    html += '<span class="text-xs text-gray-400">少</span>'
-    html += '<div class="w-3 h-3 rounded-sm bg-gray-100"></div>'
-    html += '<div class="w-3 h-3 rounded-sm bg-blue-200"></div>'
-    html += '<div class="w-3 h-3 rounded-sm bg-green-400"></div>'
-    html += '<div class="w-3 h-3 rounded-sm bg-red-300"></div>'
-    html += '<span class="text-xs text-gray-400">宣言中 / 達成 / 未達成</span>'
+    html += '<div class="flex items-center gap-2 mt-2">'
+    html += '<div class="w-3 h-3 rounded-sm bg-blue-200"></div><span class="text-xs text-gray-400 mr-1">宣言中</span>'
+    html += '<div class="w-3 h-3 rounded-sm bg-green-400"></div><span class="text-xs text-gray-400 mr-1">達成</span>'
+    html += '<div class="w-3 h-3 rounded-sm bg-red-300"></div><span class="text-xs text-gray-400">未達成</span>'
     html += '</div>'
 
     html += '</div></div>'
 
     this.element.innerHTML = html
+
+    this.element.querySelectorAll("[data-label]").forEach(el => {
+      el.addEventListener("mousemove", (e) => {
+        const label = el.dataset.label
+        if (!label) return
+        this.tooltip.textContent = label
+        this.tooltip.classList.remove("hidden")
+        this.tooltip.style.left = `${e.clientX + 12}px`
+        this.tooltip.style.top = `${e.clientY - 28}px`
+      })
+      el.addEventListener("mouseleave", () => {
+        this.tooltip.classList.add("hidden")
+      })
+    })
   }
 
   formatDate(date) {

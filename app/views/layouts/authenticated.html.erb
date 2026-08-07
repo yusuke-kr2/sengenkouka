@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title><%= content_for(:title) || "sengen" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="sengen">
+    <meta name="description" content="<%= content_for(:description) || "sengenは、宣言効果の力であなたの目標達成を後押しするサービスです。" %>">
+
+    <!-- OGP -->
+    <meta property="og:title" content="<%= content_for(:title) || "sengen - 宣言すると、動き出せる。" %>">
+    <meta property="og:description" content="<%= content_for(:description) || "sengenは、宣言効果の力であなたの目標達成を後押しするサービスです。" %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:image" content="<%= content_for(:og_image) || image_url("logo.png") %>">
+    <meta property="og:site_name" content="sengen">
+    <meta property="og:locale" content="ja_JP">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="<%= content_for(:title) || "sengen - 宣言すると、動き出せる。" %>">
+    <meta name="twitter:description" content="<%= content_for(:description) || "sengenは、宣言効果の力であなたの目標達成を後押しするサービスです。" %>">
+    <meta name="twitter:image" content="<%= content_for(:og_image) || image_url("logo.png") %>">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+  </head>
+
+  <body class="bg-white">
+    <div class="max-w-7xl mx-auto flex min-h-screen">
+      <%= render "shared/sidebar" %>
+      <main class="flex-1 flex">
+        <div class="flex-1 border-r border-gray-200 min-h-screen">
+          <%= yield %>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
