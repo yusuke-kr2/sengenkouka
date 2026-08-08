@@ -4,7 +4,7 @@ class DeclarationsController < ApplicationController
 
   def index
     @declarations = filter_by_category(filter_by_tag(filter_by_period(filter_by_scope(Declaration.includes(:witnesses, :tags, user: { avatar_attachment: :blob }).recent))))
-    @declaration = Declaration.new(deadline: Date.today)
+    @declaration = Declaration.new(deadline: Date.today, category: :study)
     @current_period = params[:period] || "all"
     @current_scope = params[:scope] || "all"
     @current_category = params[:category] || "all"
