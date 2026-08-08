@@ -44,7 +44,7 @@
         <%= form_with model: @declaration, url: declarations_path do |f| %>
           <div data-controller="char-count" data-char-count-max-value="200">
             <%= f.text_area :content,
-                placeholder: "今日やることを宣言しよう...",
+                placeholder: "ここで宣言",
                 maxlength: 200,
                 rows: 3,
                 data: { char_count_target: "input", action: "input->char-count#update" },
