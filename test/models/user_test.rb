@@ -60,5 +60,4 @@ class UserTest < ActiveSupport::TestCase
     alice.increment_streak!
     assert_equal 1, alice.reload.streak_count
   end
-
 end
