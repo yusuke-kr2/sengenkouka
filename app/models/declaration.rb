@@ -28,15 +28,6 @@ class Declaration < ApplicationRecord
 
   after_save :save_tags
 
-  private
-
-  def save_tags
-    return if tag_names.nil?
-    self.tags = tag_names.split(",").map(&:strip).reject(&:blank?).uniq.map do |name|
-      Tag.find_or_create_by!(name: name)
-    end
-  end
-
   validates :content, presence: true, length: { maximum: 200 }
   validates :deadline, presence: true
   validate do
@@ -45,4 +36,13 @@ class Declaration < ApplicationRecord
   end
 
   scope :recent, -> { order(created_at: :desc) }
+
+  private
+
+  def save_tags
+    return if tag_names.nil?
+    self.tags = tag_names.split(",").map(&:strip).reject(&:blank?).uniq.map do |name|
+      Tag.find_or_create_by!(name: name)
+    end
+  end
 end

@@ -64,6 +64,5 @@ RSpec.describe User, type: :model do
     it "increment_streak!でストリークが増える" do
       expect { user.increment_streak! }.to change { user.reload.streak_count }.from(0).to(1)
     end
-
   end
 end
