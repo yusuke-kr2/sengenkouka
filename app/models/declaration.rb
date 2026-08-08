@@ -21,12 +21,18 @@ class Declaration < ApplicationRecord
   end
 
   def expired?
-    declaring? && deadline < Date.today
+    declaring? && deadline < Date.current
   end
 
   attr_accessor :tag_names
 
   after_save :save_tags
+
+  validates :content, presence: true, length: { maximum: 200 }
+  validates :deadline, presence: true
+  validates :deadline, comparison: { greater_than_or_equal_to: ->(_record) { Date.current }, message: "は今日以降の日付を選択してください" }, allow_blank: true
+
+  scope :recent, -> { order(created_at: :desc) }
 
   private
 
@@ -36,17 +42,4 @@ class Declaration < ApplicationRecord
       Tag.find_or_create_by!(name: name)
     end
   end
-
-  validates :content, presence: true, length: { maximum: 200 }
-  validates :deadline, presence: true
-  validate :deadline_cannot_be_in_the_past
-
-  private
-
-  def deadline_cannot_be_in_the_past
-    return if deadline.blank?
-    errors.add(:base, :deadline_in_the_past) if deadline < Date.today
-  end
-
-  scope :recent, -> { order(created_at: :desc) }
 end

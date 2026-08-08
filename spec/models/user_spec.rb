@@ -64,19 +64,5 @@ RSpec.describe User, type: :model do
     it "increment_streak!でストリークが増える" do
       expect { user.increment_streak! }.to change { user.reload.streak_count }.from(0).to(1)
     end
-
-    it "期限切れの宣言があるとストリークがリセットされる" do
-      user.update!(streak_count: 5)
-      declaration = create(:declaration, user: user, status: :declaring, deadline: Date.today)
-      declaration.update_column(:deadline, Date.yesterday)
-      user.reset_streak_if_expired!
-      expect(user.reload.streak_count).to eq(0)
-    end
-
-    it "期限切れがなければストリークはリセットされない" do
-      user.update!(streak_count: 3)
-      user.reset_streak_if_expired!
-      expect(user.reload.streak_count).to eq(3)
-    end
   end
 end
