@@ -21,7 +21,7 @@ class Declaration < ApplicationRecord
   end
 
   def expired?
-    declaring? && deadline < Date.today
+    declaring? && deadline < Date.current
   end
 
   attr_accessor :tag_names
@@ -30,7 +30,7 @@ class Declaration < ApplicationRecord
 
   validates :content, presence: true, length: { maximum: 200 }
   validates :deadline, presence: true
-  validates :deadline, comparison: { greater_than_or_equal_to: -> (_record) { Date.today }, message: "は今日以降の日付を選択してください" }, allow_blank: true
+  validates :deadline, comparison: { greater_than_or_equal_to: ->(_record) { Date.current }, message: "は今日以降の日付を選択してください" }, allow_blank: true
 
   scope :recent, -> { order(created_at: :desc) }
 
