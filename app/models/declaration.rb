@@ -36,7 +36,7 @@ class Declaration < ApplicationRecord
 
   def deadline_not_in_past
     return if deadline.blank?
-    errors.add(:base, :deadline_in_the_past) if deadline < Date.today
+    errors.add(:base, "今日以降の日付を選択してください") if deadline < Date.today
   end
 
   private
