@@ -30,14 +30,9 @@ class Declaration < ApplicationRecord
 
   validates :content, presence: true, length: { maximum: 200 }
   validates :deadline, presence: true
-  validate :deadline_not_in_past
+  validates :deadline, comparison: { greater_than_or_equal_to: -> (_record) { Date.today }, message: "は今日以降の日付を選択してください" }, allow_blank: true
 
   scope :recent, -> { order(created_at: :desc) }
-
-  def deadline_not_in_past
-    return if deadline.blank?
-    errors.add(:base, "今日以降の日付を選択してください") if deadline < Date.today
-  end
 
   private
 
