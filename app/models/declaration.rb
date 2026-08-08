@@ -39,12 +39,8 @@ class Declaration < ApplicationRecord
 
   validates :content, presence: true, length: { maximum: 200 }
   validates :deadline, presence: true
-  validate :deadline_cannot_be_in_the_past
-
-  private
-
-  def deadline_cannot_be_in_the_past
-    return if deadline.blank?
+  validate do
+    next if deadline.blank?
     errors.add(:base, :deadline_in_the_past) if deadline < Date.today
   end
 
