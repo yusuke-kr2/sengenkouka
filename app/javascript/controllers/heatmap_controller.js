@@ -4,25 +4,120 @@ export default class extends Controller {
   static values = { data: Object }
 
   connect() {
-    this.render()
+    const today = new Date()
+    this.selectedYear = today.getFullYear()
+    this.selectedMonth = today.getMonth()
+
     this.tooltip = document.createElement("div")
     this.tooltip.className = "fixed z-50 bg-gray-800 text-white text-xs rounded px-2 py-1 pointer-events-none hidden whitespace-nowrap"
     document.body.appendChild(this.tooltip)
+
+    this.render()
   }
 
   disconnect() {
     this.tooltip?.remove()
   }
 
+  isMobile() {
+    return (this.element.clientWidth || 320) < 600
+  }
+
   render() {
+    if (this.isMobile()) {
+      this.renderMobile()
+    } else {
+      this.renderDesktop()
+    }
+    this.attachTooltips()
+  }
+
+  // ── モバイル：月タブ + 月カレンダー ───────────────────────
+
+  renderMobile() {
+    const today = new Date()
+
+    // 直近12ヶ月分のタブ
+    const months = []
+    for (let i = 11; i >= 0; i--) {
+      const d = new Date(today.getFullYear(), today.getMonth() - i, 1)
+      months.push({ year: d.getFullYear(), month: d.getMonth() })
+    }
+
+    let html = '<div class="flex overflow-x-auto gap-1.5 pb-2" style="scrollbar-width:none;-webkit-overflow-scrolling:touch">'
+    months.forEach(({ year, month }) => {
+      const isSelected = year === this.selectedYear && month === this.selectedMonth
+      html += `<button
+        class="shrink-0 px-3 py-1 rounded-full text-xs font-medium transition-colors ${isSelected ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'}"
+        data-year="${year}" data-month="${month}"
+        data-action="click->heatmap#selectMonth">
+        ${this.monthName(month)}
+      </button>`
+    })
+    html += '</div>'
+
+    html += this.buildMonthGrid(this.selectedYear, this.selectedMonth)
+    html += this.buildLegend()
+
+    this.element.innerHTML = html
+  }
+
+  selectMonth(event) {
+    this.selectedYear = parseInt(event.currentTarget.dataset.year)
+    this.selectedMonth = parseInt(event.currentTarget.dataset.month)
+    this.render()
+  }
+
+  buildMonthGrid(year, month) {
+    const data = this.dataValue
+    const today = new Date()
+    const firstDay = new Date(year, month, 1)
+    const lastDay = new Date(year, month + 1, 0)
+    const dayLabels = ['日', '月', '火', '水', '木', '金', '土']
+
+    let html = '<div class="w-full mb-2">'
+
+    // 曜日ヘッダー
+    html += '<div class="grid grid-cols-7 mb-1">'
+    dayLabels.forEach(d => {
+      html += `<div class="text-center text-xs text-gray-400 py-0.5">${d}</div>`
+    })
+    html += '</div>'
+
+    // 日付グリッド
+    html += '<div class="grid grid-cols-7 gap-0.5">'
+
+    // 月初の曜日オフセット
+    for (let i = 0; i < firstDay.getDay(); i++) {
+      html += '<div class="h-8"></div>'
+    }
+
+    for (let day = 1; day <= lastDay.getDate(); day++) {
+      const date = new Date(year, month, day)
+      const dateStr = this.formatDate(date)
+      const status = data[dateStr] || null
+      const isFuture = date > today
+      const colorClass = isFuture ? 'bg-gray-50' : this.getColor(status, true)
+      const label = !isFuture ? `${dateStr}${status ? ` · ${this.statusLabel(status)}` : ''}` : ''
+      html += `<div class="h-8 rounded-sm ${colorClass} flex items-center justify-center cursor-default" data-label="${label}">
+        <span class="text-xs ${status && !isFuture ? 'text-gray-600 font-bold' : 'text-gray-400'}">${day}</span>
+      </div>`
+    }
+
+    html += '</div></div>'
+    return html
+  }
+
+  // ── デスクトップ：年間ヒートマップ ────────────────────────
+
+  renderDesktop() {
     const data = this.dataValue
     const today = new Date()
     const startDate = new Date(today)
     startDate.setDate(startDate.getDate() - 364)
-
-    // 日曜始まりに調整
     const dayOfWeek = startDate.getDay()
     startDate.setDate(startDate.getDate() - dayOfWeek)
+    const rangeStart = new Date(startDate)
 
     const weeks = []
     let current = new Date(startDate)
@@ -31,28 +126,23 @@ export default class extends Controller {
       const week = []
       for (let i = 0; i < 7; i++) {
         const dateStr = this.formatDate(current)
-        const isInRange = current >= new Date(today.getFullYear(), today.getMonth(), today.getDate() - 364) && current <= today
+        const isInRange = current >= rangeStart && current <= today
         week.push({ date: dateStr, status: data[dateStr] || null, inRange: isInRange })
         current.setDate(current.getDate() + 1)
       }
       weeks.push(week)
     }
 
-    // 月ラベル
     const monthLabels = this.buildMonthLabels(weeks)
 
-    let html = '<div class="overflow-x-auto">'
-    html += '<div class="inline-flex flex-col gap-0.5">'
+    let html = '<div class="overflow-x-auto"><div class="inline-flex flex-col gap-0.5">'
 
-    // 月ラベル行
-    html += '<div class="flex gap-0.5 mb-1 ml-0">'
-    monthLabels.forEach((label, i) => {
-      const isLast = i === monthLabels.length - 1
-      html += `<span class="text-xs text-gray-400 whitespace-nowrap" style="width:${label.span * 13}px;overflow:visible">${label.name}</span>`
+    html += '<div class="flex gap-0.5 mb-1">'
+    monthLabels.forEach(label => {
+      html += `<span class="text-xs text-gray-400" style="width:${label.span * 13}px;white-space:nowrap;overflow:hidden">${label.name}</span>`
     })
     html += '</div>'
 
-    // ヒートマップグリッド
     html += '<div class="flex gap-0.5">'
     weeks.forEach(week => {
       html += '<div class="flex flex-col gap-0.5">'
@@ -65,17 +155,23 @@ export default class extends Controller {
     })
     html += '</div>'
 
-    // 凡例
-    html += '<div class="flex items-center gap-2 mt-2">'
-    html += '<div class="w-3 h-3 rounded-sm bg-blue-200"></div><span class="text-xs text-gray-400 mr-1">宣言中</span>'
-    html += '<div class="w-3 h-3 rounded-sm bg-green-400"></div><span class="text-xs text-gray-400 mr-1">達成</span>'
-    html += '<div class="w-3 h-3 rounded-sm bg-red-300"></div><span class="text-xs text-gray-400">未達成</span>'
-    html += '</div>'
-
+    html += this.buildLegend()
     html += '</div></div>'
 
     this.element.innerHTML = html
+  }
 
+  // ── 共通 ──────────────────────────────────────────────────
+
+  buildLegend() {
+    return `<div class="flex items-center gap-2 mt-2">
+      <div class="w-3 h-3 rounded-sm bg-blue-200"></div><span class="text-xs text-gray-400 mr-1">宣言中</span>
+      <div class="w-3 h-3 rounded-sm bg-green-400"></div><span class="text-xs text-gray-400 mr-1">達成</span>
+      <div class="w-3 h-3 rounded-sm bg-red-300"></div><span class="text-xs text-gray-400">未達成</span>
+    </div>`
+  }
+
+  attachTooltips() {
     this.element.querySelectorAll("[data-label]").forEach(el => {
       el.addEventListener("mousemove", (e) => {
         const label = el.dataset.label
@@ -122,23 +218,17 @@ export default class extends Controller {
     const labels = []
     let currentMonth = null
     let span = 0
-
     weeks.forEach(week => {
-      const firstDay = new Date(week[0].date)
-      const month = firstDay.getMonth()
+      const month = new Date(week[0].date).getMonth()
       if (month !== currentMonth) {
-        if (currentMonth !== null) {
-          labels.push({ name: this.monthName(currentMonth), span })
-        }
+        if (currentMonth !== null) labels.push({ name: this.monthName(currentMonth), span })
         currentMonth = month
         span = 1
       } else {
         span++
       }
     })
-    if (currentMonth !== null) {
-      labels.push({ name: this.monthName(currentMonth), span })
-    }
+    if (currentMonth !== null) labels.push({ name: this.monthName(currentMonth), span })
     return labels
   }
 
