@@ -1,4 +1,44 @@
 ja:
+  datetime:
+    distance_in_words:
+      half_a_minute: "1分"
+      less_than_x_seconds:
+        one: "1分"
+        other: "1分"
+      x_seconds:
+        one: "1分"
+        other: "1分"
+      less_than_x_minutes:
+        one: "1分"
+        other: "%{count}分"
+      x_minutes:
+        one: "1分"
+        other: "%{count}分"
+      about_x_hours:
+        one: "1時間"
+        other: "%{count}時間"
+      x_hours:
+        one: "1時間"
+        other: "%{count}時間"
+      x_days:
+        one: "1日"
+        other: "%{count}日"
+      about_x_months:
+        one: "1ヶ月"
+        other: "%{count}ヶ月"
+      x_months:
+        one: "1ヶ月"
+        other: "%{count}ヶ月"
+      about_x_years:
+        one: "1年"
+        other: "%{count}年"
+      over_x_years:
+        one: "3年以上"
+        other: "3年以上"
+      almost_x_years:
+        one: "1年"
+        other: "%{count}年"
+
   profiles:
     notices:
       updated: "プロフィールを更新しました"
