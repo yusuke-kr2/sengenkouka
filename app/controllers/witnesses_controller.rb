@@ -11,7 +11,10 @@ class WitnessesController < ApplicationController
 
   def create
     @declaration = Declaration.find(params[:declaration_id])
-    current_user.witnesses.create(declaration: @declaration) unless @declaration.user == current_user
+    unless @declaration.user == current_user
+      current_user.witnesses.create(declaration: @declaration)
+      Notification.create!(user: @declaration.user, actor: current_user, declaration: @declaration, notification_type: :witnessed)
+    end
     redirect_back fallback_location: root_path
   end
 

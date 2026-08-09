@@ -4,6 +4,7 @@ class RelationshipsController < ApplicationController
     def create
       @user = User.find(params[:following_id])
       current_user.follow(@user)
+      Notification.create!(user: @user, actor: current_user, notification_type: :followed)
       redirect_back fallback_location: user_path(@user)
     end
 

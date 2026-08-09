@@ -28,6 +28,23 @@
               <span class="text-gray-500">明日が期限です</span>
             </p>
             <p class="text-sm text-gray-600 truncate mt-0.5">「<%= notification.declaration.content %>」</p>
+          <% elsif notification.followed? %>
+            <p class="text-sm text-gray-800">
+              <%= link_to notification.actor.name, user_path(notification.actor), class: "font-semibold hover:underline" %>
+              <span class="text-gray-500">があなたをフォローしました</span>
+            </p>
+          <% elsif notification.witnessed? %>
+            <p class="text-sm text-gray-800">
+              <%= link_to notification.actor.name, user_path(notification.actor), class: "font-semibold hover:underline" %>
+              <span class="text-gray-500">が見届け人になりました</span>
+            </p>
+            <p class="text-sm text-gray-600 truncate mt-0.5">「<%= notification.declaration.content %>」</p>
+          <% elsif notification.declaration_completed? %>
+            <p class="text-sm text-gray-800">
+              <%= link_to notification.actor.name, user_path(notification.actor), class: "font-semibold hover:underline" %>
+              <span class="text-gray-500">が宣言を達成しました</span>
+            </p>
+            <p class="text-sm text-gray-600 truncate mt-0.5">「<%= notification.declaration.content %>」</p>
           <% else %>
             <p class="text-sm text-gray-800">
               <%= link_to notification.actor.name, user_path(notification.actor), class: "font-semibold hover:underline" %>

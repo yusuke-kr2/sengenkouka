@@ -35,6 +35,7 @@
   </head>
 
   <body class="bg-white overflow-x-hidden">
+    <%= turbo_stream_from "notifications_#{current_user.id}" %>
     <div class="max-w-7xl mx-auto flex min-h-screen">
       <%= render "shared/sidebar" %>
       <main class="flex-1 min-w-0 flex flex-col">

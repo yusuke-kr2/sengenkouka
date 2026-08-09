@@ -29,6 +29,10 @@ class DeclarationsController < ApplicationController
     @declaration = current_user.declarations.declaring.find(params[:id])
     @declaration.completed!
     current_user.increment_streak!
+    # 見届け人に通知
+    @declaration.witnesses.includes(:user).each do |witness|
+      Notification.create!(user: witness.user, actor: current_user, declaration: @declaration, notification_type: :declaration_completed)
+    end
     redirect_to root_path, notice: t("declarations.notices.completed")
   end
 
