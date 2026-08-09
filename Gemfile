@@ -16,6 +16,8 @@ gem "solid_queue"
 gem "solid_cable"
 
 gem "devise"
+gem "omniauth-google-oauth2"
+gem "omniauth-rails_csrf_protection"
 
 gem "bootsnap", require: false
 gem "kamal", require: false
