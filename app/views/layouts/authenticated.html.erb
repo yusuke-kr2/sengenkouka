@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="overflow-x-hidden">
   <head>
     <title><%= content_for(:title) || "sengen" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta charset="UTF-8">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="sengen">
     <meta name="description" content="<%= content_for(:description) || "sengenは、宣言効果の力であなたの目標達成を後押しするサービスです。" %>">
@@ -33,10 +34,11 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body class="bg-white">
+  <body class="bg-white overflow-x-hidden">
     <div class="max-w-7xl mx-auto flex min-h-screen">
       <%= render "shared/sidebar" %>
-      <main class="flex-1 flex">
+      <main class="flex-1 min-w-0 flex flex-col">
+        <%= render "shared/mobile_header" %>
         <div class="flex-1 border-r border-gray-200 min-h-screen pb-16 md:pb-0">
           <%= yield %>
         </div>

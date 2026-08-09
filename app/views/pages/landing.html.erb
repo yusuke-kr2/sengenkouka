@@ -3,9 +3,9 @@
 
 <!-- ナビバー -->
 <nav class="fixed top-0 left-0 right-0 z-50 bg-white/75 backdrop-blur-md border-b border-gray-200">
-  <div class="mx-auto pl-0 pr-6 h-16 flex justify-between items-center max-w-5xl">
+  <div class="mx-auto px-4 h-16 flex justify-between items-center max-w-5xl">
     <%= link_to root_path do %>
-      <%= image_tag "logo.png", alt: "sengen", class: "h-10 w-auto -ml-12" %>
+      <%= image_tag "logo.png", alt: "sengen", class: "h-9 w-auto" %>
     <% end %>
     <div class="flex gap-2">
       <% if user_signed_in? %>
@@ -96,9 +96,9 @@
 
 <!-- フッター -->
 <footer class="border-t border-gray-200 py-6">
-  <div class="mx-auto pl-0 pr-6 flex flex-col md:flex-row items-center justify-between gap-3 max-w-5xl">
+  <div class="mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-3 max-w-5xl">
     <%= link_to root_path do %>
-      <%= image_tag "logo.png", alt: "sengen", class: "h-10 w-auto -ml-12" %>
+      <%= image_tag "logo.png", alt: "sengen", class: "h-9 w-auto" %>
     <% end %>
     <div class="flex gap-6 text-gray-500 text-sm">
       <%= link_to "利用規約", terms_of_service_path, class: "hover:text-gray-900 transition-colors" %>
