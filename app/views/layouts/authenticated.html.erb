@@ -37,10 +37,11 @@
     <div class="max-w-7xl mx-auto flex min-h-screen">
       <%= render "shared/sidebar" %>
       <main class="flex-1 flex">
-        <div class="flex-1 border-r border-gray-200 min-h-screen">
+        <div class="flex-1 border-r border-gray-200 min-h-screen pb-16 md:pb-0">
           <%= yield %>
         </div>
       </main>
     </div>
+    <%= render "shared/bottom_nav" %>
   </body>
 </html>

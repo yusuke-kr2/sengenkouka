@@ -78,7 +78,7 @@
   <!-- フィルター -->
   <div class="border-b border-gray-200">
     <!-- カテゴリ・期間 -->
-    <div class="flex items-center gap-2 px-4 py-2 border-t border-gray-100">
+    <div class="flex flex-wrap items-center gap-2 px-4 py-2 border-t border-gray-100">
       <select onchange="window.location=this.value" class="text-xs text-gray-600 border border-gray-200 rounded-full px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
         <% ([["カテゴリ：すべて", "all"]] + Declaration::CATEGORY_LABELS.map { |k, v| ["#{v}", k] }).each do |label, cat| %>
           <option value="<%= declarations_path(category: cat, scope: @current_scope, period: @current_period, tag: @current_tag) %>" <%= 'selected' if @current_category == cat %>><%= label %></option>

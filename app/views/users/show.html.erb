@@ -1,6 +1,6 @@
 <% content_for :title, "#{@user.name} - sengen" %>
 
-<div class="px-4 py-4 space-y-4">
+<div class="px-4 py-4 space-y-4 overflow-x-hidden">
 
   <!-- プロフィールカード -->
   <div class="bg-white rounded-2xl border border-gray-200 p-5">
@@ -30,7 +30,7 @@
         <% if @user.bio.present? %>
           <p class="text-gray-500 text-sm mt-2 leading-relaxed"><%= @user.bio %></p>
         <% end %>
-        <div class="flex items-center gap-4 mt-2">
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2">
           <%= link_to followings_user_path(@user), class: "text-sm text-gray-500 hover:underline" do %><span class="font-bold text-gray-800"><%= @user.followings.count %></span> フォロー<% end %>
           <%= link_to followers_user_path(@user), class: "text-sm text-gray-500 hover:underline" do %><span class="font-bold text-gray-800"><%= @user.followers.count %></span> フォロワー<% end %>
           <span class="text-sm text-gray-500"><span class="font-bold text-gray-800"><%= @user.streak_count %></span> 累計達成数</span>
@@ -46,7 +46,7 @@
   </div>
 
   <!-- 統計 -->
-  <div data-controller="tabs" class="grid grid-cols-5 gap-3">
+  <div data-controller="tabs" class="grid grid-cols-3 md:grid-cols-5 gap-2 md:gap-3">
     <button data-tabs-target="tab" data-tab="all" data-tab-style="card" data-action="click->tabs#switch"
       class="bg-white rounded-2xl border border-gray-200 p-4 text-center cursor-pointer hover:bg-gray-50 transition-colors">
       <p class="text-2xl font-bold text-gray-800"><%= @declarations.count %></p>
