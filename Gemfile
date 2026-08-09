@@ -16,6 +16,7 @@ gem "solid_queue"
 gem "solid_cable"
 
 gem "devise"
+gem "rails-i18n"
 
 gem "bootsnap", require: false
 gem "kamal", require: false
