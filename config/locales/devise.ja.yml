@@ -13,6 +13,9 @@ ja:
     confirmations:
       send_instructions: "確認メールを送信しました"
       confirmed: "メールアドレスを確認しました"
+    omniauth_callbacks:
+      success: "%{kind}アカウントでログインしました"
+      failure: "%{kind}でのログインに失敗しました（%{reason}）"
     failure:
       invalid: "メールアドレスまたはパスワードが正しくありません"
       not_found_in_database: "メールアドレスまたはパスワードが正しくありません"
