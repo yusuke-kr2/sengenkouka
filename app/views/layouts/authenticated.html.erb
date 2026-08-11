@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" class="overflow-x-hidden">
+<html lang="ja">
   <head>
     <title><%= content_for(:title) || "sengen" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -36,9 +36,9 @@
 
   <body class="bg-white overflow-x-hidden">
     <%= turbo_stream_from "notifications_#{current_user.id}" %>
-    <div class="max-w-7xl mx-auto flex h-screen overflow-hidden">
+    <div class="max-w-7xl mx-auto flex min-h-screen">
       <%= render "shared/sidebar" %>
-      <main class="flex-1 min-w-0 flex flex-col overflow-y-auto">
+      <main class="flex-1 min-w-0 flex flex-col">
         <%= render "shared/mobile_header" %>
         <div class="flex-1 border-r border-gray-200 min-h-screen pb-16 md:pb-0">
           <%= yield %>
