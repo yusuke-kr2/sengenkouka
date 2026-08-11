@@ -96,7 +96,7 @@
         </div>
       <% else %>
         <% @declarations.each do |declaration| %>
-          <div class="px-4 py-4 border-b border-gray-100 <%= declaration.completed? ? 'bg-blue-50' : declaration.pending? ? 'bg-red-50' : '' %>">
+          <div class="px-4 py-4 border-b border-gray-100 <%= declaration.completed? ? 'bg-blue-50' : (declaration.pending? || declaration.expired?) ? 'bg-red-50' : '' %>">
             <p class="text-gray-800 text-sm leading-relaxed mb-1"><%= declaration.content %></p>
             <div class="flex items-center justify-between">
               <p class="text-gray-400 text-xs"><%= declaration.deadline.strftime("%Y/%m/%d") %></p>
