@@ -36,9 +36,9 @@
 
   <body class="bg-white overflow-x-hidden">
     <%= turbo_stream_from "notifications_#{current_user.id}" %>
-    <div class="max-w-7xl mx-auto flex min-h-screen">
+    <div class="max-w-7xl mx-auto flex h-screen overflow-hidden">
       <%= render "shared/sidebar" %>
-      <main class="flex-1 min-w-0 flex flex-col">
+      <main class="flex-1 min-w-0 flex flex-col overflow-y-auto">
         <%= render "shared/mobile_header" %>
         <div class="flex-1 border-r border-gray-200 min-h-screen pb-16 md:pb-0">
           <%= yield %>
