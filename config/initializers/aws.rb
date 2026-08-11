@@ -1,4 +1,6 @@
-Aws.config.update(
-  request_checksum_calculation: "when_required",
-  response_checksum_validation: "when_required"
-)
+if defined?(Aws)
+  Aws.config.update(
+    request_checksum_calculation: "when_required",
+    response_checksum_validation: "when_required"
+  )
+end
