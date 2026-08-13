@@ -33,6 +33,8 @@ class Declaration < ApplicationRecord
   validates :deadline, comparison: { greater_than_or_equal_to: ->(_record) { Date.current }, message: "は今日以降の日付を選択してください" }, allow_blank: true
 
   scope :recent, -> { order(created_at: :desc) }
+  scope :active_declaring, -> { declaring.where("deadline >= ?", Date.current) }
+  scope :overdue, -> { declaring.where("deadline < ?", Date.current) }
 
   private
 
