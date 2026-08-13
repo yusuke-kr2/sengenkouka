@@ -18,7 +18,7 @@
     </div>
   <% else %>
     <% @declarations.each do |declaration| %>
-      <div class="<%= if declaration.completed? then 'bg-blue-100 border-blue-200' elsif declaration.pending? then 'bg-red-100 border-red-200' else 'bg-white border-gray-200' end %> rounded-2xl border p-5">
+      <div class="<%= if declaration.completed? then 'bg-blue-100 border-blue-200' elsif declaration.pending? || declaration.expired? then 'bg-red-100 border-red-200' else 'bg-white border-gray-200' end %> rounded-2xl border p-5">
         <div class="flex gap-3">
           <div class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0 overflow-hidden">
             <% if declaration.user.avatar.attached? %>
@@ -31,7 +31,7 @@
           </div>
           <div class="flex-1 min-w-0">
             <p class="font-bold text-gray-800 mb-2"><%= link_to declaration.user.name, user_path(declaration.user), class: "hover:underline" %></p>
-            <div class="<%= if declaration.completed? || declaration.pending? then 'bg-white' else 'bg-gray-50' end %> rounded-lg px-4 py-3 mb-3">
+            <div class="<%= if declaration.completed? || declaration.pending? || declaration.expired? then 'bg-white' else 'bg-gray-50' end %> rounded-lg px-4 py-3 mb-3">
               <p class="text-gray-700 text-sm leading-relaxed"><%= declaration.content %></p>
             </div>
             <div class="flex items-center justify-between">

@@ -5,8 +5,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @declarations = @user.declarations.recent
-    @declaring = @declarations.declaring
-    @pending = @declarations.pending
+    @declaring = @user.declarations.active_declaring.recent
+    @pending = @user.declarations.pending.or(@user.declarations.overdue).recent
     @completed = @declarations.completed
     judged = @pending.count + @completed.count
     @completion_rate = judged > 0 ? (@completed.count * 100 / judged) : 0
