@@ -5,7 +5,6 @@ class Notification < ApplicationRecord
 
   enum :notification_type, {
     follow: "follow",
-    reminder: "reminder",
     followed: "followed",
     witnessed: "witnessed",
     declaration_completed: "declaration_completed"
