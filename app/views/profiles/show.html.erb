@@ -100,8 +100,8 @@
             <p class="text-gray-800 text-sm leading-relaxed mb-1"><%= declaration.content %></p>
             <div class="flex items-center justify-between">
               <p class="text-gray-400 text-xs"><%= declaration.deadline.strftime("%Y/%m/%d") %></p>
-              <% if declaration.witnesses.any? %>
-                <span class="text-gray-400 text-xs"><%= declaration.witnesses.count %>人が見届け中</span>
+              <% if declaration.witnesses.size > 0 %>
+                <span class="text-gray-400 text-xs"><%= declaration.witnesses.size %>人が見届け中</span>
               <% end %>
             </div>
           </div>
@@ -121,8 +121,8 @@
             <p class="text-gray-800 text-sm leading-relaxed mb-1"><%= declaration.content %></p>
             <div class="flex items-center justify-between">
               <p class="text-gray-400 text-xs"><%= declaration.deadline.strftime("%Y/%m/%d") %></p>
-              <% if declaration.witnesses.any? %>
-                <span class="text-gray-400 text-xs"><%= declaration.witnesses.count %>人が見届け中</span>
+              <% if declaration.witnesses.size > 0 %>
+                <span class="text-gray-400 text-xs"><%= declaration.witnesses.size %>人が見届け中</span>
               <% end %>
             </div>
           </div>
@@ -142,8 +142,8 @@
             <p class="text-gray-800 text-sm leading-relaxed mb-1"><%= declaration.content %></p>
             <div class="flex items-center justify-between">
               <p class="text-gray-400 text-xs"><%= declaration.deadline.strftime("%Y/%m/%d") %></p>
-              <% if declaration.witnesses.any? %>
-                <span class="text-gray-400 text-xs"><%= declaration.witnesses.count %>人が見届け中</span>
+              <% if declaration.witnesses.size > 0 %>
+                <span class="text-gray-400 text-xs"><%= declaration.witnesses.size %>人が見届け中</span>
               <% end %>
             </div>
           </div>

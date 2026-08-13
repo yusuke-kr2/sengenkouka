@@ -3,7 +3,7 @@ class ProfilesController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    @declarations = current_user.declarations.recent.to_a
+    @declarations = current_user.declarations.includes(:witnesses).recent.to_a
     @declaring = @declarations.select { |d| d.declaring? && d.deadline >= Date.current }
     @pending = @declarations.select { |d| d.pending? || d.expired? }
     @completed = @declarations.select(&:completed?)
