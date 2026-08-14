@@ -7,12 +7,12 @@
     <%= link_to root_path do %>
       <%= image_tag "logo.png", alt: "sengen", class: "h-9 w-auto" %>
     <% end %>
-    <div class="flex gap-2">
+    <div class="flex gap-2 shrink-0">
       <% if user_signed_in? %>
-        <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors cursor-pointer" %>
+        <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors cursor-pointer whitespace-nowrap" %>
       <% else %>
-        <%= link_to "ログイン", new_user_session_path, class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors" %>
-        <%= link_to "新規登録", new_user_registration_path, class: "bg-blue-600 text-white rounded-lg px-4 py-1.5 text-sm hover:bg-blue-700 transition-colors" %>
+        <%= link_to "ログイン", new_user_session_path, class: "border border-gray-300 text-gray-600 rounded-lg px-4 py-1.5 text-sm hover:bg-gray-50 transition-colors whitespace-nowrap" %>
+        <%= link_to "新規登録", new_user_registration_path, class: "bg-blue-600 text-white rounded-lg px-4 py-1.5 text-sm hover:bg-blue-700 transition-colors whitespace-nowrap" %>
       <% end %>
     </div>
   </div>
