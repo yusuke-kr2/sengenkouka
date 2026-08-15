@@ -9,15 +9,7 @@
   <% if @notifications.any? %>
     <% @notifications.each do |notification| %>
       <div class="bg-white rounded-2xl border border-gray-200 p-4 flex items-center gap-3">
-        <div class="h-10 w-10 rounded-full flex items-center justify-center shrink-0 overflow-hidden bg-gray-100">
-          <% if notification.actor.avatar.attached? %>
-            <%= image_tag notification.actor.avatar, class: "h-full w-full object-cover" %>
-          <% else %>
-            <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-            </svg>
-          <% end %>
-        </div>
+        <%= render "shared/avatar", user: notification.actor %>
         <div class="flex-1 min-w-0">
           <% if notification.followed? %>
             <p class="text-sm text-gray-800">

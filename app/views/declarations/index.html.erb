@@ -31,15 +31,7 @@
   <!-- 宣言フォーム -->
   <div class="px-4 py-4 border-b border-gray-200">
     <div class="flex gap-3">
-      <div class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0 overflow-hidden">
-        <% if current_user.avatar.attached? %>
-          <%= image_tag current_user.avatar, class: "h-full w-full object-cover" %>
-        <% else %>
-          <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-          </svg>
-        <% end %>
-      </div>
+      <%= render "shared/avatar", user: current_user %>
       <div class="flex-1">
         <%= form_with model: @declaration, url: declarations_path do |f| %>
           <div data-controller="char-count" data-char-count-max-value="200">
@@ -113,15 +105,7 @@
     <% @declarations.each do |declaration| %>
       <div class="px-4 py-4 border-b border-gray-200 <%= (declaration.pending? || declaration.expired?) ? 'bg-red-50' : declaration.completed? ? 'bg-blue-50' : '' %> hover:bg-gray-50 transition-colors">
         <div class="flex gap-3">
-          <div class="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0 overflow-hidden">
-            <% if declaration.user.avatar.attached? %>
-              <%= image_tag declaration.user.avatar, class: "h-full w-full object-cover" %>
-            <% else %>
-              <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-              </svg>
-            <% end %>
-          </div>
+          <%= render "shared/avatar", user: declaration.user %>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2 mb-1">
               <span class="font-bold text-gray-900 text-sm"><%= link_to declaration.user.name, user_path(declaration.user), class: "hover:underline" %></span>
