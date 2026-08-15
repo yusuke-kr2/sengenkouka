@@ -2,17 +2,7 @@
 
 <div class="overflow-x-hidden">
 
-  <!-- フラッシュメッセージ -->
-  <% if notice %>
-    <div class="mx-4 mt-4 bg-blue-50 border border-blue-200 text-blue-700 rounded-xl px-4 py-3 text-sm flex items-center justify-between">
-      <span><%= notice %></span>
-      <button onclick="this.parentElement.remove()" class="ml-3 text-blue-400 hover:text-blue-600 transition-colors">
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-  <% end %>
+  <%= render "shared/flash_messages", class: "mx-4 mt-4" %>
 
   <!-- プロフィール -->
   <div class="px-4 pt-4 pb-3 border-b border-gray-100">

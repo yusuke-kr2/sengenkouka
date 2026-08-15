@@ -19,15 +19,7 @@
 <div class="min-h-screen bg-gray-50 pt-16">
   <div class="max-w-5xl mx-auto px-6 py-8">
 
-    <!-- フラッシュメッセージ -->
-    <% if notice %>
-      <div class="bg-blue-50 border border-blue-200 text-blue-700 rounded-xl px-4 py-3 text-sm mb-4 flex items-center justify-between">
-        <span><%= notice %></span>
-        <button onclick="this.parentElement.remove()" class="ml-3 text-blue-400 hover:text-blue-600">
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-    <% end %>
+    <%= render "shared/flash_messages" %>
 
     <h1 class="text-2xl font-bold text-gray-800 mb-6">宣言管理 (<%= @declarations.count %>件)</h1>
 
