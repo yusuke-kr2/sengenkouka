@@ -38,3 +38,6 @@
 !/app/assets/builds/.keep
 
 /node_modules
+
+# Docker Compose（シークレットを含むため）
+compose.yml
