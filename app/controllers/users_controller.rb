@@ -17,11 +17,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @users = @user.followings.includes(avatar_attachment: :blob)
     @title = "フォロー中"
+    render :user_list
   end
 
   def followers
     @user = User.find(params[:id])
     @users = @user.followers.includes(avatar_attachment: :blob)
     @title = "フォロワー"
+    render :user_list
   end
 end
