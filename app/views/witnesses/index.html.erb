@@ -27,7 +27,7 @@
               <p class="text-gray-700 text-sm leading-relaxed"><%= declaration.content %></p>
             </div>
             <div class="flex items-center justify-between">
-              <span class="text-gray-400 text-sm"><%= declaration.deadline.strftime("%Y/%m/%d") %></span>
+              <span class="text-gray-400 text-sm">期限: <%= format_date(declaration.deadline) %></span>
               <% if declaration.completed? %>
                 <span class="flex items-center gap-1.5 text-green-600 text-sm font-semibold bg-green-50 px-4 py-1.5 rounded-full">
                   <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

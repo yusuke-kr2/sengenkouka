@@ -94,6 +94,7 @@
             <div class="flex items-center gap-2 mb-1">
               <span class="font-bold text-gray-900 text-sm"><%= link_to declaration.user.name, user_path(declaration.user), class: "hover:underline" %></span>
               <span class="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full"><%= declaration.category_label %></span>
+              <span class="text-xs text-gray-400"><%= format_datetime(declaration.created_at) %></span>
               <% if declaration.completed? %>
                 <span class="text-xs text-green-600 font-bold ml-auto">✓ 達成</span>
               <% end %>
@@ -108,7 +109,7 @@
               </div>
             <% end %>
             <div class="flex items-center justify-between mt-1">
-              <span class="text-xs text-gray-400"><%= declaration.deadline.strftime("%Y/%m/%d") %></span>
+              <span class="text-xs text-gray-400">期限: <%= format_date(declaration.deadline) %></span>
               <div class="flex items-center gap-3">
                 <% if declaration.user == current_user %>
                   <% share_text = declaration.completed? ? "「#{declaration.content}」を達成しました！" : "「#{declaration.content}」を宣言しました！" %>

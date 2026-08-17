@@ -52,7 +52,7 @@
               <td class="px-5 py-3 text-sm text-gray-600"><%= user.email %></td>
               <td class="px-5 py-3 text-sm text-gray-600 text-center"><%= user.declarations.size %></td>
               <td class="px-5 py-3 text-sm text-gray-600 text-center"><%= user.streak_count %></td>
-              <td class="px-5 py-3 text-sm text-gray-400"><%= user.created_at.strftime("%Y/%m/%d") %></td>
+              <td class="px-5 py-3 text-sm text-gray-400"><%= format_date(user.created_at) %></td>
               <td class="px-5 py-3 text-right">
                 <% unless user == current_user %>
                   <%= button_to "削除", admin_user_path(user), method: :delete,
