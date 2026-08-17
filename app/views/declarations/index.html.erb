@@ -130,7 +130,10 @@
                   <% end %>
                 <% end %>
                 <% if declaration.user == current_user && declaration.editable? %>
-                  <%= link_to "編集", edit_declaration_path(declaration), class: "text-gray-400 text-xs hover:text-gray-600 transition-colors" %>
+                  <span class="flex items-center gap-1.5">
+                    <%= link_to "編集", edit_declaration_path(declaration), class: "text-gray-400 text-xs hover:text-gray-600 transition-colors" %>
+                    <span class="text-gray-300 text-xs">· 作成から1時間以内のみ編集できます</span>
+                  </span>
                 <% end %>
                 <% if declaration.declaring? && declaration.user == current_user %>
                   <button
