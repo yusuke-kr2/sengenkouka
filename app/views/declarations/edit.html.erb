@@ -1,0 +1,58 @@
+<% content_for :title, "宣言を編集 - sengen" %>
+
+<div class="px-4 py-4 space-y-4">
+
+  <!-- ヘッダー -->
+  <div class="flex items-center gap-3">
+    <%= link_to root_path, class: "text-gray-400 hover:text-gray-600 transition-colors" do %>
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+    <% end %>
+    <p class="font-bold text-gray-800 text-lg">宣言を編集</p>
+  </div>
+
+  <%= render "shared/flash_messages" %>
+
+  <div class="bg-white rounded-2xl border border-gray-200 p-5">
+    <div class="flex gap-3">
+      <%= render "shared/avatar", user: current_user %>
+      <div class="flex-1">
+        <%= form_with model: @declaration, url: declaration_path(@declaration) do |f| %>
+          <div data-controller="char-count" data-char-count-max-value="200">
+            <%= f.text_area :content,
+                placeholder: "ここで宣言",
+                maxlength: 200,
+                rows: 3,
+                data: { char_count_target: "input", action: "input->char-count#update" },
+                class: "w-full text-gray-800 placeholder-gray-400 text-sm resize-none focus:outline-none border-0 p-0 leading-relaxed" %>
+            <p class="text-right text-xs mt-1 text-gray-300"><span data-char-count-target="count">200</span></p>
+          </div>
+          <div class="flex items-center gap-2 mt-2 flex-wrap">
+            <%= f.select :category,
+                Declaration::CATEGORY_LABELS.map { |k, v| [v, k] },
+                {},
+                class: "border border-gray-200 rounded-md px-3 py-1 text-xs text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+            <%= f.date_select :deadline,
+                { start_year: Date.today.year, end_year: Date.today.year + 5,
+                  order: [:year, :month, :day],
+                  use_month_numbers: true },
+                { class: "border border-gray-200 rounded-md px-3 py-1 text-xs text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" } %>
+            <%= f.text_field :tag_names,
+                value: @declaration.tags.map(&:name).join(", "),
+                placeholder: "タグ（カンマ区切り）",
+                class: "border border-gray-200 rounded-md px-3 py-1 text-xs text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent flex-1 min-w-0" %>
+          </div>
+          <div class="flex justify-end mt-3">
+            <%= f.submit "保存する",
+                class: "bg-blue-600 text-white rounded-full px-5 py-1.5 text-sm font-bold hover:bg-blue-700 transition-colors cursor-pointer" %>
+          </div>
+        <% end %>
+        <%= button_to "削除", declaration_path(@declaration), method: :delete,
+            data: { turbo_confirm: "この宣言を削除しますか？" },
+            class: "text-red-500 text-xs hover:text-red-700 transition-colors cursor-pointer mt-2" %>
+      </div>
+    </div>
+  </div>
+
+</div>

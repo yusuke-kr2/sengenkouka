@@ -25,6 +25,29 @@ class DeclarationsController < ApplicationController
     end
   end
 
+  def edit
+    @declaration = current_user.declarations.find(params[:id])
+    redirect_to root_path, alert: "編集できません" unless @declaration.editable?
+  end
+
+  def update
+    @declaration = current_user.declarations.find(params[:id])
+    unless @declaration.editable?
+      redirect_to root_path, alert: "編集できません" and return
+    end
+    if @declaration.update(declaration_params)
+      redirect_to root_path, notice: t("declarations.notices.updated")
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @declaration = current_user.declarations.find(params[:id])
+    @declaration.destroy
+    redirect_to root_path, notice: "宣言を削除しました"
+  end
+
   def complete
     @declaration = current_user.declarations.declaring.find(params[:id])
     @declaration.completed!

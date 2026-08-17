@@ -129,6 +129,12 @@
                     <%= button_to "見届ける", witnesses_path(declaration_id: declaration.id), class: "text-gray-500 text-xs bg-gray-100 px-3 py-1 rounded-full cursor-pointer hover:bg-gray-200 transition-colors" %>
                   <% end %>
                 <% end %>
+                <% if declaration.user == current_user && declaration.editable? %>
+                  <span class="flex items-center gap-1.5">
+                    <%= link_to "編集", edit_declaration_path(declaration), class: "text-gray-400 text-xs hover:text-gray-600 transition-colors" %>
+                    <span class="text-gray-300 text-xs">· 宣言から1時間以内</span>
+                  </span>
+                <% end %>
                 <% if declaration.declaring? && declaration.user == current_user %>
                   <button
                     data-action="click->achieve#open"

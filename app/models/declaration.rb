@@ -24,6 +24,10 @@ class Declaration < ApplicationRecord
     declaring? && deadline < Date.current
   end
 
+  def editable?
+    created_at >= 1.hour.ago
+  end
+
   attr_accessor :tag_names
 
   after_save :save_tags

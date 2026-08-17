@@ -52,6 +52,7 @@ ja:
     notices:
       created: "宣言しました！"
       completed: "達成おめでとうございます！"
+      updated: "宣言を更新しました"
 
   errors:
     messages:
