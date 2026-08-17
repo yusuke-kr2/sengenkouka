@@ -39,7 +39,7 @@
         <div class="px-4 py-4 border-b border-gray-100 <%= declaration.completed? ? 'bg-blue-50' : (declaration.pending? || declaration.expired?) ? 'bg-red-50' : '' %>">
           <p class="text-gray-800 text-sm leading-relaxed mb-1"><%= declaration.content %></p>
           <div class="flex items-center justify-between">
-            <p class="text-gray-400 text-xs"><%= declaration.deadline.strftime("%Y/%m/%d") %></p>
+            <p class="text-gray-400 text-xs">期限: <%= format_date(declaration.deadline) %></p>
             <% if show_witnesses && declaration.witnesses.size > 0 %>
               <span class="text-gray-400 text-xs"><%= declaration.witnesses.size %>人が見届け中</span>
             <% end %>
@@ -60,7 +60,7 @@
         <div class="px-4 py-4 border-b border-gray-100">
           <p class="text-gray-800 text-sm leading-relaxed mb-1"><%= declaration.content %></p>
           <div class="flex items-center justify-between">
-            <p class="text-gray-400 text-xs"><%= declaration.deadline.strftime("%Y/%m/%d") %></p>
+            <p class="text-gray-400 text-xs">期限: <%= format_date(declaration.deadline) %></p>
             <% if show_witnesses && declaration.witnesses.size > 0 %>
               <span class="text-gray-400 text-xs"><%= declaration.witnesses.size %>人が見届け中</span>
             <% end %>
@@ -81,7 +81,7 @@
         <div class="px-4 py-4 border-b border-gray-100 bg-red-50">
           <p class="text-gray-800 text-sm leading-relaxed mb-1"><%= declaration.content %></p>
           <div class="flex items-center justify-between">
-            <p class="text-gray-400 text-xs"><%= declaration.deadline.strftime("%Y/%m/%d") %></p>
+            <p class="text-gray-400 text-xs">期限: <%= format_date(declaration.deadline) %></p>
             <% if show_witnesses && declaration.witnesses.size > 0 %>
               <span class="text-gray-400 text-xs"><%= declaration.witnesses.size %>人が見届け中</span>
             <% end %>
@@ -102,7 +102,7 @@
         <div class="px-4 py-4 border-b border-gray-100 bg-blue-50">
           <p class="text-gray-800 text-sm leading-relaxed mb-1"><%= declaration.content %></p>
           <div class="flex items-center justify-between">
-            <p class="text-gray-400 text-xs"><%= declaration.deadline.strftime("%Y/%m/%d") %></p>
+            <p class="text-gray-400 text-xs">期限: <%= format_date(declaration.deadline) %></p>
             <span class="flex items-center gap-1 text-green-600 text-xs font-semibold">
               <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>

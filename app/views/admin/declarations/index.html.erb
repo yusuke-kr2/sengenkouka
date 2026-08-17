@@ -44,7 +44,7 @@
                   <%= case declaration.status when 'declaring' then '宣言中' when 'completed' then '達成' when 'pending' then '未達成' end %>
                 </span>
               </td>
-              <td class="px-5 py-3 text-sm text-gray-400"><%= declaration.deadline.strftime("%Y/%m/%d") %></td>
+              <td class="px-5 py-3 text-sm text-gray-400"><%= format_date(declaration.deadline) %></td>
               <td class="px-5 py-3 text-right">
                 <%= button_to "削除", admin_declaration_path(declaration), method: :delete,
                     data: { turbo_confirm: "この宣言を本当に削除しますか？" },
