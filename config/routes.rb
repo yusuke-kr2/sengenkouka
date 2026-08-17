@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :relationships, only: [ :create, :destroy ]
   resources :witnesses, only: [ :create, :destroy, :index ]
 
-  resources :declarations, only: [ :index, :create, :edit, :update ] do
+  resources :declarations, only: [ :index, :create, :edit, :update, :destroy ] do
     member do
       patch :complete
     end

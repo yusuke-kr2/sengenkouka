@@ -42,6 +42,12 @@ class DeclarationsController < ApplicationController
     end
   end
 
+  def destroy
+    @declaration = current_user.declarations.find(params[:id])
+    @declaration.destroy
+    redirect_to root_path, notice: "宣言を削除しました"
+  end
+
   def complete
     @declaration = current_user.declarations.declaring.find(params[:id])
     @declaration.completed!
