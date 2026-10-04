@@ -8,7 +8,7 @@
 
 ## サービスURL
 
-[https://sengenkouka.onrender.com/](https://sengen-kouka.com/)
+https://sengen-kouka.com/
 
 
 ## サービス概要
