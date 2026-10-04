@@ -114,21 +114,14 @@ https://sengen-kouka.com/
 
 機能ごとにGitHub Issuesでタスクを管理し、Issue単位でブランチを作成して開発しています。
 
-```
-Issue作成
-  ↓
-ブランチ作成
-  ↓
-実装
-  ↓
-Pull Request作成
-  ↓
-GitHub Actions（RuboCop / RSpec）
-  ↓
-確認・修正
-  ↓
-mainへマージ → Renderへ自動デプロイ
-```
+1. Issue作成
+2. ブランチ作成
+3. 実装
+4. Pull Request作成
+5. GitHub Actions（RuboCop / RSpec）
+6. 確認・修正
+7. mainへマージ
+8. Renderへ自動デプロイ
 
 
 ## 画面遷移図
