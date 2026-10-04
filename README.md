@@ -1,6 +1,6 @@
 # 宣言効果
 
-### 宣言して、動き出す。
+### 「宣言効果」という心理学を用いた宣言特化型SNS
 
 <p align="center">
   <img src="app/assets/images/ogp.png" width="800">
@@ -117,9 +117,9 @@ https://sengenkouka.onrender.com/
 ```
 Issue作成
   ↓
-ブランチ作成（feature/機能名）
+ブランチ作成
   ↓
-実装・テスト
+実装
   ↓
 Pull Request作成
   ↓
